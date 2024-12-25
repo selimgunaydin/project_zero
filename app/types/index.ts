@@ -3,8 +3,10 @@ export interface UserDocument {
   email: string;
   password: string;
   name: string;
+  surname: string;
   phone: string;
   image: string;
   createdAt: Date;
   updatedAt: Date;
+  role: "user" | "admin";
 }
