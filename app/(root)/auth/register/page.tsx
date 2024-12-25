@@ -1,21 +1,13 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { register } from "@/app/actions/auth/register";
-import { useSession } from "next-auth/react";
 
 export default function Register() {
   const [error, setError] = useState<string>();
   const router = useRouter();
   const ref = useRef<HTMLFormElement>(null);
-  const session = useSession();
-
-  useEffect(() => {
-    if (session?.status === "authenticated") {
-      router.push("/");
-    }
-  }, [session.status]);
 
   const handleSubmit = async (formData: FormData) => {
     const r = await register({

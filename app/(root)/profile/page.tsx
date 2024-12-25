@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 export default function Profile() {
   const { data, error, isLoading } = useGetProfileInfoQuery();
   const router = useRouter();
-  console.log(error);
 
   if (isLoading) return <p>Yükleniyor...</p>;
   if (error) return <p>Hata oluştu</p>;

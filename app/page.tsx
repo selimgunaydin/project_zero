@@ -1,11 +1,7 @@
-"use client";
-
-import Header from "./components/views/header";
-
 export default function Home() {
   return (
     <main>
-      <Header />
+      <div className="w-full flex items-center justify-center py-4">Home</div>
     </main>
   );
 }
