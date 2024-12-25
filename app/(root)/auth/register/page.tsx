@@ -77,7 +77,7 @@ export default function Register() {
         </button>
 
         <Link
-          href="/login"
+          href="/auth/login"
           className="text-sm text-[#888] transition duration-150 ease hover:text-black"
         >
           Already have an account?
