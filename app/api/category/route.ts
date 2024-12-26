@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 //Geçici olarak oluşturuldu. Actions klasörüne taşınacak.
 
 import { Category } from "@/app/models/Category";
