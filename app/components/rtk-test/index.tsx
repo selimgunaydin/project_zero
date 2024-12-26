@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function RtkTest() {
   const dispatch = useDispatch();
-  const counterValue = useSelector((state) => state.counter.value);
+  const counterValue = useSelector((state: { counter: { value: number } }) => state.counter.value);
 
   return (
     <div className="border rounded border-solid border-black p-2 flex flex-col items-center justify-center gap-2 w-[160px]">

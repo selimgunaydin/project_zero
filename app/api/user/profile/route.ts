@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { connectDB } from "@/app/lib/mongodb";
 import { User } from "@/app/models/User";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/auth";
 
 
 export async function GET() {
@@ -16,6 +18,9 @@ export async function GET() {
     await connectDB();
 
     // session.user.email üzerinden veri çekebilirsiniz
+    if (!session.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const user = await User.findOne({ email: session.user.email });
 
     if (!user) {
@@ -25,7 +30,9 @@ export async function GET() {
     // Döndürülecek veriler
     return NextResponse.json({
       name: user.name,
+      surname: user.surname,
       email: user.email,
+      phone: user.phone,
     });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

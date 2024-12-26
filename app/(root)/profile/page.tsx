@@ -10,13 +10,15 @@ export default function Profile() {
 
   if (isLoading) return <p>Yükleniyor...</p>;
   if (error) return <p>Hata oluştu</p>;
-
+  console.log(data);
   return (
     <div className="pt-4">
       <div className="flex flex-col gap-2">
         <h1>Profil Bilgileri</h1>
         <p>Ad: {data?.name}</p>
+        <p>Soyad: {data?.surname}</p>
         <p>Email: {data?.email}</p>
+        <p>Tel: {data?.phone}</p>
         <div>
           <button
             className="flex items-center border border-solid border-black rounded px-4"
