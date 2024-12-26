@@ -2,10 +2,10 @@ import Link from "next/link";
 import React from "react";
 import SessionStatus from "./sessionStatus";
 import RtkTest from "../../blocks/rtk-test";
-import { Category } from "@/app/models/Category";
+import { getCategories } from "@/app/actions/category/get-categories";
 
 export default async function Header() {
-  const categories = await Category.find();
+  const categories = await getCategories().then((res) => res?.success);
 
   return (
     <div className="w-full border-b bg-white">
@@ -26,7 +26,7 @@ export default async function Header() {
           <li className="relative group">
             <Link href="#">Categories</Link>
             <ul className="absolute hidden flex-col gap-2 ps-2 py-1.5 min-w-[100px] group-hover:flex border rounded bg-white shadow-lg">
-              {categories.map((category) => (
+              {categories?.map((category) => (
                 <li className="flex py-1 w-full" key={category.id}>
                   <Link className="w-full" href={`/${(category.name).toLowerCase()}`}>{category.name}</Link>
                 </li>

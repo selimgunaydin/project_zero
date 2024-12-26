@@ -17,4 +17,4 @@ const CategorySchema = new Schema<CategoryDocument>(
   }
 );
 
-export const Category = mongoose.models?.db_category || model<CategoryDocument>("db_category", CategorySchema);
+export const Category = mongoose.models?.db_categories || model<CategoryDocument>("db_categories", CategorySchema);
