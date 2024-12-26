@@ -16,9 +16,9 @@ export default async function Header() {
         <ul className="flex gap-5 col-span-4 font-semibold justify-end items-center">
         <li className="relative group">
             <p className="cursor-pointer">Categories</p>
-            <ul className="absolute hidden flex-col gap-2 ps-2 py-1.5 min-w-[100px] group-hover:flex border rounded bg-white shadow-lg">
+            <ul className="absolute hidden flex-col gap-2 ps-3 py-2 min-w-[100px] group-hover:flex border rounded bg-white shadow-lg">
               {categories?.map((category) => (
-                <li className="flex py-1 w-full" key={category.id}>
+                <li className="flex py-1.5 w-full pe-12" key={category.id}>
                   <Link className="w-full" href={`/category/${(category.name).toLowerCase()}`}>{category.name}</Link>
                 </li>
               ))}
