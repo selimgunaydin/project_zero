@@ -10,33 +10,33 @@ export default async function Header() {
   return (
     <div className="w-full border-b bg-white">
       <div className="container py-3 w-full grid grid-cols-12 items-center">
-        <Link className="text-3xl font-bold col-span-4" href="/">
+        <Link className="text-3xl font-bold col-span-6" href="/">
           PZ
         </Link>
-        <div className="col-span-4 flex justify-center">
-          <RtkTest />
-        </div>
-        <ul className="flex gap-5 col-span-4 font-semibold justify-end">
-          <li>
-            <Link href="#">A</Link>
-          </li>
-          <li>
-            <Link href="#">B</Link>
-          </li>
-          <li className="relative group">
-            <Link href="#">Categories</Link>
+        <div className="col-span-6 flex justify-end">
+        <ul className="flex gap-5 col-span-4 font-semibold justify-end items-center">
+        <li className="relative group">
+            <p className="cursor-pointer">Categories</p>
             <ul className="absolute hidden flex-col gap-2 ps-2 py-1.5 min-w-[100px] group-hover:flex border rounded bg-white shadow-lg">
               {categories?.map((category) => (
                 <li className="flex py-1 w-full" key={category.id}>
-                  <Link className="w-full" href={`/${(category.name).toLowerCase()}`}>{category.name}</Link>
+                  <Link className="w-full" href={`/category/${(category.name).toLowerCase()}`}>{category.name}</Link>
                 </li>
               ))}
             </ul>
           </li>
           <li>
+            <Link className="border-b border-b-transparent hover:border-b-2 hover:border-b-black transition pb-0.5" href="#">Blog</Link>
+          </li>
+          <li>
+            <Link className="border-b border-b-transparent hover:border-b-2 hover:border-b-black transition pb-0.5" href="#">Contact</Link>
+          </li>
+
+          <li>
             <SessionStatus />
           </li>
         </ul>
+        </div>
       </div>
     </div>
   );

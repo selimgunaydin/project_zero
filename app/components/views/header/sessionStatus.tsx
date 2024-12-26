@@ -11,7 +11,7 @@ export default function SessionStatus() {
     return (
       <Link
         href="/profile"
-        className="flex items-center border border-solid border-black rounded px-4"
+        className="flex items-center border border-solid border-black rounded px-4 py-1 hover:bg-black hover:text-white transition"
       >
         Profile
       </Link>
@@ -22,7 +22,7 @@ export default function SessionStatus() {
     return (
       <Link
         href="/auth/login"
-        className="flex items-center border border-solid border-black rounded px-4"
+        className="flex items-center border border-solid border-black rounded px-4 py-1 hover:bg-black hover:text-white transition"
       >
         Sign In
       </Link>
