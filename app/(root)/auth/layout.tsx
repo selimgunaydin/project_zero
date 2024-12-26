@@ -27,5 +27,5 @@ export default function AuthLayout({
     );
   }
 
-  return session.status === "unauthenticated" ? <div className="pt-4">{children}</div> : null;
+  return session.status === "unauthenticated" ? <div className="mt-12">{children}</div> : null;
 }

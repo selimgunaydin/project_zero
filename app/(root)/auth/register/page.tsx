@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { register } from "@/app/actions/auth/register";
+import Button from "@/app/components/blocks/Button";
 
 export default function Register() {
   const [error, setError] = useState<string>();
@@ -62,7 +63,7 @@ export default function Register() {
         <input
           type="email"
           placeholder="Email"
-          className="w-full h-8 border border-solid border-black py-1 px-2.5 rounded"
+          className="w-full h-8 border border-solid border-black py-1 px-2.5 rounded text-[13px]"
           name="email"
         />
 
@@ -70,7 +71,7 @@ export default function Register() {
         <input
           type="phone"
           placeholder="Phone"
-          className="w-full h-8 border border-solid border-black py-1 px-2.5 rounded"
+          className="w-full h-8 border border-solid border-black py-1 px-2.5 rounded text-[13px]"
           name="phone"
         />
 
@@ -79,17 +80,12 @@ export default function Register() {
           <input
             type="password"
             placeholder="Password"
-            className="w-full h-8 border border-solid border-black py-1 px-2.5 rounded"
+            className="w-full h-8 border border-solid border-black py-1 px-2.5 rounded text-[13px]"
             name="password"
           />
         </div>
 
-        <button
-          className="w-full border border-solid border-black py-1.5 mt-2.5 rounded
-          transition duration-150 ease hover:bg-black"
-        >
-          Sign up
-        </button>
+      <Button className="w-full">Sign Up</Button>
 
         <Link
           href="/auth/login"
