@@ -4,21 +4,23 @@ import { getCategories } from "@/app/actions/category/get-categories";
 export default async function CategoryPage({
   params,
 }: {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }) {
-  const categories = await getCategories().then((res) => res?.success);
-  const isValidCategory = categories?.some(
-    (cat) => cat.name.toLowerCase() === params.category.toLowerCase()
+  const { category } = await params; 
+  const categoryData = await getCategories().then((res) =>
+    res?.success.find((data) => data.name.toLowerCase() === category)
   );
 
-  if (!isValidCategory) {
+  if (!categoryData) {
     notFound();
   }
 
   return (
     <div>
-      <h1 className="text-2xl">{params.category}</h1>
-      <p>{params.category} ile ilgili içerik burada gösterilecek.</p>
+      <h1 className="text-2xl border-b py-4 mb-4 font-bold">
+        {categoryData.name}
+      </h1>
+      <p>{categoryData.description}</p>
     </div>
   );
 }

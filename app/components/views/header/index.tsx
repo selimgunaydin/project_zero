@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React from "react";
 import SessionStatus from "./sessionStatus";
-import RtkTest from "../../blocks/rtk-test";
 import { getCategories } from "@/app/actions/category/get-categories";
 
 export default async function Header() {
