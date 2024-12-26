@@ -10,3 +10,11 @@ export interface UserDocument {
   updatedAt: Date;
   role: "user" | "admin";
 }
+
+export interface CategoryDocument {
+  _id: string;
+  name: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
