@@ -1,15 +1,17 @@
 import { connectDB } from "@/app/lib/mongodb";
 import { Blogs } from "@/app/models/Post";
 
-export const getBlogs = async () => {
+export const getBlogByAuthor = async (authorId: string) => {
   try {
     await connectDB();
-    const blogs = await Blogs.find()
+    const blogs = await Blogs.find({
+      author: authorId,
+    })
+      .populate("category")
       .populate({
         path: "author",
-        select: "-password -role -createdAt -updatedAt -phone -email", 
+        select: "-password -role -createdAt -updatedAt -phone -email",
       })
-      .populate("category")
       .exec();
     return {
       success: blogs,

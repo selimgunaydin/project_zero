@@ -21,7 +21,7 @@ const BlogSchema = new Schema<PostDocument>({
   },
   author: {
     type: Schema.Types.ObjectId,
-    ref: "db_user",
+    ref: "db_users",
     required: [true, "User is required"],
   },
   tags: {

@@ -29,7 +29,7 @@ const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
   }
 
   return status === "authenticated" ? (
-    <div className="flex h-screen">
+    <div className="flex">
       <ProfileMenu />
       <div className="flex-1 overflow-y-auto p-4">{children}</div>
     </div>

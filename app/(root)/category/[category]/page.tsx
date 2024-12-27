@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { getCategories } from "@/app/actions/category/get-categories";
+import { getBlogByCategory } from "@/app/actions/blog/get-blog-by-category";
+import BlogCard from "@/app/components/blocks/BlogCard";
 
 export default async function CategoryPage({
   params,
@@ -11,16 +13,23 @@ export default async function CategoryPage({
     res?.success.find((data: any) => data.name.toLowerCase() === category)
   );
 
+  const blogData = await getBlogByCategory(categoryData._id).then(
+    (res: any) => res?.success
+  );
+
   if (!categoryData) {
     notFound();
   }
 
   return (
     <div>
-      <h1 className="text-2xl border-b py-4 mb-4 font-bold">
-        {categoryData.name}
-      </h1>
-      <p>{categoryData.description}</p>
+      <div className="grid grid-cols-12 gap-4">
+        {blogData?.map((blog: any, index: any) => (
+          <div className="col-span-4" key={index}>
+            <BlogCard blog={blog} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

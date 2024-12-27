@@ -1,20 +1,23 @@
 import { connectDB } from "@/app/lib/mongodb";
 import { Blogs } from "@/app/models/Post";
 
-export const getBlogs = async () => {
+export const getBlogByCategory = async (id: string) => {
   try {
     await connectDB();
-    const blogs = await Blogs.find()
+
+    const blogs = await Blogs.find({
+      category: id,
+    })
+      .populate("category")
       .populate({
         path: "author",
         select: "-password -role -createdAt -updatedAt -phone -email", 
-      })
-      .populate("category")
-      .exec();
+      });
     return {
       success: blogs,
     };
-  } catch {
+  } catch (error) {
+    console.error(error);
     return {
       error: "Something went wrong!",
     };
