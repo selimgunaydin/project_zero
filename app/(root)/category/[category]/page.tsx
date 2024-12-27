@@ -6,9 +6,9 @@ export default async function CategoryPage({
 }: {
   params: Promise<{ category: string }>;
 }) {
-  const { category } = await params; 
-  const categoryData = await getCategories().then((res) =>
-    res?.success.find((data) => data.name.toLowerCase() === category)
+  const { category } = await params;
+  const categoryData = await getCategories().then((res: any) =>
+    res?.success.find((data: any) => data.name.toLowerCase() === category)
   );
 
   if (!categoryData) {

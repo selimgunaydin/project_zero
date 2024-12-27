@@ -1,5 +1,4 @@
 import { getBlogs } from "./actions/blog/get-blogs";
-import AddBlog from "./components/views/add-blog";
 
 export default async function Home() {
   const blogs = await getBlogs().then((res) => res.success);
@@ -7,7 +6,6 @@ console.log(blogs);
   return (
     <main>
       <div className="w-full flex flex-col items-center justify-center py-4">
-        <AddBlog />
         <div>
           <h1 className="text-2xl font-bold text-center">
             Welcome to the Blog App
