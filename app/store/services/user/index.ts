@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // /api/user/profile endpoint'ine istek atacak RTK Query yapılandırması

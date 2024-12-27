@@ -18,3 +18,15 @@ export interface CategoryDocument {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface PostDocument {
+  _id: string;
+  title: string;
+  content: string;
+  image: string;
+  createdAt: Date;
+  updatedAt: Date;
+  category: CategoryDocument;
+  tags: string[];
+  author: UserDocument;
+}

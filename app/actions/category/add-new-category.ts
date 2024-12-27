@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { connectDB } from "@/app/lib/mongodb";
 import { Category } from "@/app/models/Category";
 
