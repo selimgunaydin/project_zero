@@ -10,5 +10,9 @@ export const getCategories = async () => {
     return {
       success: categories,
     };
-  } catch {}
+  } catch {
+    return {
+      error: "Something went wrong!",
+    };
+  }
 };

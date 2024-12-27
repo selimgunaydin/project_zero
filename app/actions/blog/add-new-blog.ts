@@ -1,5 +1,5 @@
 import { connectDB } from "@/app/lib/mongodb";
-import { Post } from "@/app/models/Post";
+import { Blogs } from "@/app/models/Post";
 import { PostDocument } from "@/app/types";
 
 export const addNewBlog = async (values: PostDocument) => {
@@ -11,7 +11,7 @@ export const addNewBlog = async (values: PostDocument) => {
         error: "Please fill all the fields!",
       };
     }
-    const post = new Post({
+    const post = new Blogs({
       title,
       content,
       image,

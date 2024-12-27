@@ -18,7 +18,7 @@ export default function Login() {
       password: formData.get("password"),
       redirect: false,
     });
-    console.log(res);
+
     if (res?.error) {
       setError("Invalid credentials");
     }

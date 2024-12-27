@@ -1,7 +1,7 @@
 import mongoose, { model, Schema } from "mongoose";
 import { PostDocument } from "../types";
 
-const PostSchema = new Schema<PostDocument>({
+const BlogSchema = new Schema<PostDocument>({
   title: {
     type: String,
     required: [true, "Title is required"],
@@ -21,7 +21,7 @@ const PostSchema = new Schema<PostDocument>({
   },
   author: {
     type: Schema.Types.ObjectId,
-    ref: "db_users",
+    ref: "db_user",
     required: [true, "User is required"],
   },
   tags: {
@@ -30,4 +30,4 @@ const PostSchema = new Schema<PostDocument>({
   },
 });
 
-export const Post = mongoose.models?.db_posts || model("db_posts", PostSchema);
+export const Blogs = mongoose.models?.db_blogs || model("db_blogs", BlogSchema);

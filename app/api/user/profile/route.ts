@@ -27,6 +27,7 @@ export async function GET() {
 
     // Döndürülecek veriler
     return NextResponse.json({
+      id: user._id,
       name: user.name,
       surname: user.surname,
       email: user.email,
