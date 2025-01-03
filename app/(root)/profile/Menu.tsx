@@ -19,18 +19,18 @@ export const ProfileMenu: FC = () => {
         <ul>
           <li>
             <Link
-              href="/profile/blogs"
+              href="#"
               className="text-lg font-medium text-gray-800 hover:text-blue-600 transition-colors duration-200"
             >
-              Bloglarım
+              Başlık
             </Link>
           </li>
           <li>
             <Link
-              href="/profile/blogs/new"
+              href="#"
               className="block text-sm text-gray-500 mt-1"
             >
-              Yeni Blog Oluştur
+              Alt Başlık
             </Link>
           </li>
         </ul>

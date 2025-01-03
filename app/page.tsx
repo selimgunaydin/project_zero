@@ -4,7 +4,7 @@ export default async function Home() {
       <div className="w-full flex flex-col items-center justify-center py-4 min-h-screen">
         <div>
           <h1 className="text-2xl font-bold text-center">
-            Welcome to the Blog App
+            Welcome to the Business Management System
           </h1>
         </div>
       </div>
