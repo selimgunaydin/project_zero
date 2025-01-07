@@ -10,10 +10,10 @@ export default function SessionStatus() {
   if (status === "authenticated") {
     return (
       <Link
-        href="/profile"
+        href="/admin"
         className="flex items-center border border-solid border-black rounded px-4 py-1 hover:bg-black hover:text-white transition"
       >
-        Profile
+        Dashboard
       </Link>
     );
   } else if (status === "loading") {
@@ -21,7 +21,7 @@ export default function SessionStatus() {
   } else {
     return (
       <Link
-        href="/auth/login"
+        href="/login"
         className="flex items-center border border-solid border-black rounded px-4 py-1 hover:bg-black hover:text-white transition"
       >
         Sign In

@@ -38,10 +38,10 @@ export default function Login() {
         <h1 className="mb-5 w-full text-2xl font-bold">Sign In</h1>
         <Input label="E Mail" type="email" name="email" />
         <Input label="Password" type="password" name="password" />
-        <Button className="w-full">Sign In</Button>
+        <Button className="w-full" type="submit">Sign In</Button>
 
         <Link
-          href="/auth/register"
+          href="/register"
           className="text-sm text-[#888] transition duration-150 ease hover:text-black"
         >
           Don't have an account?
