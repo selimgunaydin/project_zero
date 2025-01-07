@@ -1,7 +1,8 @@
-import React from 'react'
+import type { NextPage } from "next";
 
-export default function Admin() {
-  return (
-    <div>Admin</div>
-  )
-}
+
+const Home: NextPage = () => {
+  return <>Admin Home</>;
+};
+
+export default Home;

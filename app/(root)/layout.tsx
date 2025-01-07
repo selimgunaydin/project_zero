@@ -1,6 +1,7 @@
 import React from "react";
-import Header from "../components/views/header";
-import Footer from "../components/views/footer";
+import Header from "../components/views/root/header";
+import Footer from "../components/views/root/footer";
+
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
