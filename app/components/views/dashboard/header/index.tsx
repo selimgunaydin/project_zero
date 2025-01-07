@@ -48,7 +48,7 @@ export default function NavbarWrapper({ children }: { children: React.ReactNode 
           </div>
 
           <Link
-            href="https://github.com/Siumauricio/nextui-dashboard-template"
+            href="#"
             target={"_blank"}
           >
             Github
