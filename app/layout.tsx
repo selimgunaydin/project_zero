@@ -32,10 +32,8 @@ export default function RootLayout({
       >
         <Provider>
           <Header />
-          <div className="container">
-          {children}
-          </div>
-        <Footer />
+          <div className="container flex-grow">{children}</div>
+          <Footer />
         </Provider>
       </body>
     </html>
