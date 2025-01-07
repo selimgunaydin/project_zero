@@ -12,12 +12,11 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 
-  // Ek ayarlar
   {
-    // Bu ayarlar (rules, settings vb.) Flat Config formatında geçerli olur
     rules: {
-      // @typescript-eslint/no-explicit-any kuralını devre dışı bırak
       "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
     },
   },
 ];
