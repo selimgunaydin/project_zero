@@ -1,13 +1,17 @@
-import { Input, Link, Navbar, NavbarContent } from '@nextui-org/react'
-import React from 'react'
-import { UserDropdown } from './user-dropdown'
-import { BurguerButton } from './burguer-button'
-import { SearchIcon } from '@/app/components/icons/searchicon'
-import { FeedbackIcon } from '@/app/components/icons/navbar/feedback-icon'
-import { NotificationsDropdown } from './notifications-dropdown'
-import { SupportIcon } from '@/app/components/icons/navbar/support-icon'
+import { Input, Link, Navbar, NavbarContent } from "@nextui-org/react";
+import React from "react";
+import { UserDropdown } from "./user-dropdown";
+import { BurguerButton } from "./burguer-button";
+import { SearchIcon } from "@/app/components/icons/searchicon";
+import { FeedbackIcon } from "@/app/components/icons/navbar/feedback-icon";
+import { NotificationsDropdown } from "./notifications-dropdown";
+import { SupportIcon } from "@/app/components/icons/navbar/support-icon";
 
-export default function NavbarWrapper({ children }: { children: React.ReactNode }) {
+export default function NavbarWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
       <Navbar
@@ -36,23 +40,7 @@ export default function NavbarWrapper({ children }: { children: React.ReactNode 
           justify="end"
           className="w-fit data-[justify=end]:flex-grow-0"
         >
-          <div className="flex items-center gap-2 max-md:hidden">
-            <FeedbackIcon />
-            <span>Feedback?</span>
-          </div>
-
           <NotificationsDropdown />
-
-          <div className="max-md:hidden">
-            <SupportIcon />
-          </div>
-
-          <Link
-            href="#"
-            target={"_blank"}
-          >
-            Github
-          </Link>
           <NavbarContent>
             <UserDropdown />
           </NavbarContent>
@@ -60,5 +48,5 @@ export default function NavbarWrapper({ children }: { children: React.ReactNode 
       </Navbar>
       {children}
     </div>
-  )
+  );
 }

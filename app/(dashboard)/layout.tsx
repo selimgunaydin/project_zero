@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Providers } from "./providers";
-import clsx from "clsx";
 
 export const metadata: Metadata = {
   title: "Next.js",
@@ -12,5 +10,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <Providers>{children}</Providers>;
+  return <>{children}</>;
 }
