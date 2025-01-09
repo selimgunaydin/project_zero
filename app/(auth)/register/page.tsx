@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { register } from "@/app/actions/auth/register";
 import Button from "@/app/components/blocks/Button";
+import { ROUTES } from "@/app/routes";
 
 export default function Register() {
   const [error, setError] = useState<string>();
@@ -23,7 +24,7 @@ export default function Register() {
       setError(r.error);
       return;
     } else {
-      return router.push("/auth/login");
+      return router.push(ROUTES.HOME);
     }
   };
 
