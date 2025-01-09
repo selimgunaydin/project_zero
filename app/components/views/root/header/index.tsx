@@ -1,36 +1,147 @@
+import { Notification } from "@/app/assets/icons";
+import DropdownElement from "@/app/components/dropdown";
+import Search from "@/app/components/search";
+import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { header_data } from "./mockData";
 import SessionStatus from "./sessionStatus";
 
 export default async function Header() {
+  const type = header_data?.header_type || "default";
+
+  if (type === "spread") {
+    return (
+      <div className="w-full border-b bg-white z-20 sticky top-0">
+        <div className="container py-3 w-full grid grid-cols-12 items-center">
+          <div className="col-span-3 flex justify-start items-center">
+            <Link href={header_data?.brand?.link || "/"}>
+              {header_data?.brand?.logo ? (
+                <Image
+                  src={header_data?.brand?.logo}
+                  width={header_data?.brand?.width}
+                  height={header_data?.brand?.height}
+                  alt={header_data?.brand?.alt}
+                />
+              ) : (
+                <span className="text-4xl font-bold">PZ</span>
+              )}
+            </Link>
+          </div>
+
+          <div className="col-span-9 flex items-center justify-end gap-8">
+            {header_data?.categories && header_data?.categories.length && (
+              <ul className="flex justify-around items-center gap-8">
+                {header_data?.categories.map((category) => {
+                  if (category?.dropdown) {
+                    return (
+                      <li
+                        key={category?.id}
+                        className={Object.values(
+                          header_data?.category_styles || {}
+                        ).join(" ")}
+                      >
+                        <DropdownElement
+                          title={category.name}
+                          content={category.dropdown_items}
+                        />
+                      </li>
+                    );
+                  }
+
+                  return (
+                    <li
+                      key={category?.id}
+                      className={Object.values(
+                        header_data?.category_styles || {}
+                      ).join(" ")}
+                    >
+                      <Link href={category?.link || "#"}>
+                        <span>{category?.name}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+
+            <div className="flex justify-end items-center gap-4">
+              {header_data?.properties?.search?.show && (
+                <Search
+                  className="sm:max-w-[12rem]"
+                  placeholder="Search"
+                  iconSize={18}
+                />
+              )}
+              <Notification
+                visible={header_data?.properties?.notification?.show}
+              />
+              <SessionStatus />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full border-b bg-white z-20 sticky top-0">
       <div className="container py-3 w-full grid grid-cols-12 items-center">
-        <div className="col-span-6">
-          <Link className="text-3xl font-bold" href="/">
-            PZ
+        <div className="col-span-2 flex justify-start items-center">
+          <Link href={header_data?.brand?.link || "/"}>
+            {header_data?.brand?.logo ? (
+              <Image
+                src={header_data?.brand?.logo}
+                width={header_data?.brand?.width}
+                height={header_data?.brand?.height}
+                alt={header_data?.brand?.alt}
+              />
+            ) : (
+              <span className="text-3xl font-bold">PZ</span>
+            )}
           </Link>
         </div>
 
-        <div className="col-span-6 flex justify-end">
-          <ul className="flex gap-5 col-span-4 font-semibold justify-end items-center">
-            <li className="relative group">
-              <p className="cursor-pointer">Title</p>
-            </li>
-            <li>
-              <Link
-                className="border-b border-b-transparent hover:border-b-2 hover:border-b-black transition pb-0.5"
-                href="#"
-              >
-                Title
-              </Link>
-            </li>
+        {header_data?.categories && header_data?.categories.length && (
+          <ul className="col-span-6 flex justify-around items-center">
+            {header_data?.categories.map((category) => {
+              if (category?.dropdown) {
+                return (
+                  <li
+                    key={category?.id}
+                    className={Object.values(
+                      header_data?.category_styles || {}
+                    ).join(" ")}
+                  >
+                    <DropdownElement
+                      title={category.name}
+                      content={category.dropdown_items}
+                    />
+                  </li>
+                );
+              }
 
-            <li>
-              <SessionStatus />
-            </li>
+              return (
+                <li
+                  key={category?.id}
+                  className={Object.values(
+                    header_data?.category_styles || {}
+                  ).join(" ")}
+                >
+                  <Link href={category?.link || "#"}>
+                    <span>{category?.name}</span>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
+        )}
+
+        <div className="col-span-4 flex justify-end items-center gap-4">
+          {header_data?.properties?.search?.show && (
+            <Search placeholder="Search" className="sm:max-w-[10rem]" iconSize={18} />
+          )}
+          <Notification visible={header_data?.properties?.notification?.show} />
+          <SessionStatus />
         </div>
       </div>
     </div>

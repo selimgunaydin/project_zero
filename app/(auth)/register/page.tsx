@@ -1,10 +1,10 @@
 "use client";
-import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { register } from "@/app/actions/auth/register";
-import Button from "@/app/components/blocks/Button";
 import { ROUTES } from "@/app/routes";
+import { Button } from "@nextui-org/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 
 export default function Register() {
   const [error, setError] = useState<string>();
