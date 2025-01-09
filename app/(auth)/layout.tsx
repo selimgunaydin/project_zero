@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { LoaderSpinner } from "@/app/components/blocks/LoaderSpinner";
+import { ROUTES } from "../routes";
 
 export default function AuthLayout({
   children,
@@ -15,7 +16,7 @@ export default function AuthLayout({
 
   useEffect(() => {
     if (session?.status === "authenticated") {
-      router.push("/");
+      router.push(ROUTES.HOME);
     }
   }, [session.status, router]);
 
@@ -27,5 +28,5 @@ export default function AuthLayout({
     );
   }
 
-  return session.status === "unauthenticated" ? <div className="mt-12">{children}</div> : null;
+  return session.status === "unauthenticated" ? <div>{children}</div> : null;
 }
