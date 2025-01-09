@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['res.cloudinary.com'],
+    //cloudinary haricindekiler kaldırılacak.
+    domains: ['res.cloudinary.com', 'tailwindui.com', 'static.vecteezy.com', 'images.unsplash.com'],
   },
 };
 
