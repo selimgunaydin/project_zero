@@ -52,7 +52,7 @@ export const header_data = {
     },
   ],
   category_styles: {
-    className: "text-black cursor-pointer whitespace-nowrap font-light",
+    className: "text-black cursor-pointer whitespace-nowrap",
     font_size: "text-base",
     font_weight: "font-semibold",
   },

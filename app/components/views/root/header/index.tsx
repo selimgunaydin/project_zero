@@ -105,7 +105,7 @@ export default async function Header() {
   header_data.categories.length > 0 && (
     <ul className="col-span-7 flex justify-around items-center">
       {header_data.categories
-        .sort((a, b) => a.order - b.order) // Sıralama işlemi
+        .sort((a, b) => a.order - b.order)
         .map((category) => {
           if (category?.dropdown) {
             return (

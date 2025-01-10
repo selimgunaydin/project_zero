@@ -35,7 +35,7 @@ export default function SessionStatus() {
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold">{data?.user?.email}</p>
             </DropdownItem>
-            <DropdownItem key="profile" href={ROUTES.PROFILE}>
+            <DropdownItem key="profile-link" href={ROUTES.PROFILE}>
               Profile
             </DropdownItem>
             <DropdownItem key="dashboard" href={ROUTES.ADMIN.HOME}>
