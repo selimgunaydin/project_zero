@@ -1,15 +1,6 @@
 // models/hero.ts
 import mongoose, { Schema, Document, Model, model } from 'mongoose';
 
-// Interface for the blur effect
-interface IBlurEffect extends Document {
-  className: string;
-  div: {
-    className: string;
-    clipPath: string;
-  };
-}
-
 // Interface for the announcement link
 interface IAnnouncementLink extends Document {
   href: string;
@@ -67,19 +58,9 @@ interface IContent extends Document {
 export interface IHero extends Document {
   container: { className: string };
   innerContainer: { className: string };
-  blurEffectTop: IBlurEffect;
   content: IContent;
-  blurEffectBottom: IBlurEffect;
 }
 
-// Schema definitions
-const BlurEffectSchema = new Schema<IBlurEffect>({
-  className: { type: String, required: true },
-  div: {
-    className: { type: String, required: true },
-    clipPath: { type: String, required: true },
-  },
-});
 
 const AnnouncementLinkSchema = new Schema<IAnnouncementLink>({
   href: { type: String, required: true },
@@ -134,9 +115,7 @@ const HeroSchema = new Schema<IHero>({
   innerContainer: {
     className: { type: String, required: true },
   },
-  blurEffectTop: { type: BlurEffectSchema, required: true },
   content: { type: ContentSchema, required: true },
-  blurEffectBottom: { type: BlurEffectSchema, required: true },
 });
 
 // Model creation

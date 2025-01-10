@@ -1,5 +1,7 @@
 "use client";
 
+import { FormModal } from "@/app/components/blocks/FormModal";
+import HeroWidget from "@/app/components/widgets/hero";
 import { useState, useEffect } from "react";
 
 export default function AdminPage() {
@@ -131,94 +133,16 @@ export default function AdminPage() {
       </div>
 
       <div className="relative overflow-hidden">
-        <div className={heroData.container.className}>
-          <div className={heroData.innerContainer.className}>
-            <div
-              aria-hidden="true"
-              className={heroData.blurEffectTop.className}
-            >
-              <div
-                style={{ clipPath: heroData.blurEffectTop.div.clipPath }}
-                className={heroData.blurEffectTop.div.className}
-              />
-            </div>
-
-            <div className={heroData.content.className}>
-              <div className={heroData.content.announcementContainer.className}>
-                <div
-                  className={
-                    heroData.content.announcementContainer.announcement
-                      .className
-                  }
-                >
-                  {heroData.content.announcementContainer.announcement.text}{" "}
-                  <a
-                    href={
-                      heroData.content.announcementContainer.announcement.link
-                        .href
-                    }
-                    className={
-                      heroData.content.announcementContainer.announcement.link
-                        .className
-                    }
-                  >
-                    <span aria-hidden="true" className="absolute inset-0" />
-                    {
-                      heroData.content.announcementContainer.announcement.link
-                        .text
-                    }{" "}
-                    <span aria-hidden="true">
-                      {
-                        heroData.content.announcementContainer.announcement.link
-                          .icon
-                      }
-                    </span>
-                  </a>
-                </div>
-              </div>
-              <div className="text-center">
-                <h1 className={heroData.content.title.className}>
-                  {heroData.content.title.text}
-                </h1>
-                <p className={heroData.content.description.className}>
-                  {heroData.content.description.text}
-                </p>
-                <div className={heroData.content.actions.className}>
-                  <a
-                    href={heroData.content.actions.ctaButton.href}
-                    className={heroData.content.actions.ctaButton.className}
-                  >
-                    {heroData.content.actions.ctaButton.text}
-                  </a>
-                  <a
-                    href={heroData.content.actions.learnMore.href}
-                    className={heroData.content.actions.learnMore.className}
-                  >
-                    {heroData.content.actions.learnMore.text}{" "}
-                    <span aria-hidden="true">
-                      {heroData.content.actions.learnMore.icon}
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div
-              aria-hidden="true"
-              className={heroData.blurEffectBottom.className}
-            >
-              <div
-                style={{ clipPath: heroData.blurEffectBottom.div.clipPath }}
-                className={heroData.blurEffectBottom.div.className}
-              />
-            </div>
-          </div>
-        </div>
+        <HeroWidget data={heroData} />
       </div>
-
       {editing && (
-        <div className="fixed right-0 top-16 bottom-0 w-1/4 bg-white shadow-lg p-6 pb-0 overflow-auto transition-transform transform translate-x-0">
-          <h2 className="text-xl font-semibold mb-4">Editing {editing}</h2>
+        <FormModal
+          title={`Editing ${editing}`}
+          portalId="hero-modal"
+          childrenClassName="flex flex-col px-4"
+          open={editing}
+          setOpen={setEditing}
+        >
           <div className="space-y-4">
             {editing === "global"
               ? renderInputFields(heroData, [])
@@ -238,7 +162,7 @@ export default function AdminPage() {
               Cancel
             </button>
           </div>
-        </div>
+        </FormModal>
       )}
     </div>
   );
