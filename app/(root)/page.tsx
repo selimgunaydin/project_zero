@@ -1,6 +1,6 @@
 import Stats from "../components/views/root/stats";
 import Feature from "../components/views/root/feature";
-import Hero from "../components/views/root/hero";
+import HeroComponent from "../components/views/root/hero";
 import Testimonials from "../components/views/root/testimonials";
 import Pricing from "../components/views/root/pricing";
 import Newsletter from "../components/views/root/newsletter";
@@ -10,7 +10,7 @@ export default async function Home() {
   return (
     <main>
       <div className="w-full flex flex-col items-center justify-center">
-        <Hero />
+        <HeroComponent />
         <Stats />
         <Feature />
         <Testimonials />

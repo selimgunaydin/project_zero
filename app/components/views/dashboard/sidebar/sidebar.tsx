@@ -80,8 +80,8 @@ export const SidebarWrapper = () => {
               />
               <CollapseItems
                 icon={<BalanceIcon />}
-                items={["Banks Accounts", "Credit Cards", "Loans"]}
-                title="Balances"
+                items={[{ title: "Components", href: "/admin/components/hero" }]}
+                title="Components"
               />
               <SidebarItem
                 isActive={pathname === "/reports"}
