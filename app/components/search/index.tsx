@@ -1,5 +1,6 @@
 "use client";
-import { Input } from "@nextui-org/react";
+import { Input, Button } from "@nextui-org/react";
+import { useState } from "react";
 
 const SearchIcon = ({
   size = 24,
@@ -47,19 +48,41 @@ export default function Search({
   className?: string;
   iconSize?: number;
 }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSearch = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <Input
-      classNames={{
-        base: `max-w-full sm:max-w-[8rem] h-8 ${className || ""}`,
-        mainWrapper: "h-full",
-        input: "text-small",
-        inputWrapper:
-          "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-      }}
-      placeholder={placeholder || "Type to search..."}
-      size="sm"
-      startContent={<SearchIcon size={iconSize || 18} />}
-      type="search"
-    />
+    <>
+      {!isOpen ? (
+        <Button
+          isIconOnly
+          variant="light"
+          onClick={toggleSearch}
+          aria-label="Open search"
+          className={className}
+        >
+          <SearchIcon size={iconSize || 18} />
+        </Button>
+      ) : (
+        <Input
+          autoFocus
+          onBlur={() => setIsOpen(false)}
+          classNames={{
+            base: `max-w-full sm:max-w-[8rem] h-8 ${className || ""}`,
+            mainWrapper: "h-full",
+            input: "text-small",
+            inputWrapper:
+              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+          }}
+          placeholder={placeholder || "Type to search..."}
+          size="sm"
+          startContent={<SearchIcon size={iconSize || 18} />}
+          type="search"
+        />
+      )}
+    </>
   );
 }

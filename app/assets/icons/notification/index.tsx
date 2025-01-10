@@ -94,14 +94,14 @@ export default function Notification({ visible }: { visible: boolean }) {
         >
           <DropdownTrigger>
             <span className="flex items-center justify-center cursor-pointer">
-              <NotificationIcon className="fill-current" size={30} />
+              <NotificationIcon className="fill-current" size={20} />
             </span>
           </DropdownTrigger>
         </Badge>
       ) : (
         <DropdownTrigger>
           <span className="flex items-center justify-center cursor-pointer">
-            <NotificationIcon className="fill-current" size={30} />
+            <NotificationIcon className="fill-current" size={20} />
           </span>
         </DropdownTrigger>
       )}

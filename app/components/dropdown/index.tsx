@@ -27,7 +27,7 @@ function DropdownElement({
       <DropdownTrigger>
         <span className="flex items-center gap-1">
           {title}
-          <ArrowDownIcon className="w-4 h-4" />
+          <ArrowDownIcon className="w-3 h-3" />
         </span>
       </DropdownTrigger>
       <DropdownMenu aria-label="Link Actions">
