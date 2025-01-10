@@ -16,7 +16,6 @@ import Link from "next/link";
 
 export default function SessionStatus() {
   const { status, data } = useSession();
-  console.log("datdat: ", data);
 
   if (status === "authenticated") {
     return (

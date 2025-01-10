@@ -27,9 +27,8 @@ export default function Login() {
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
-  console.log(errors);
+
   const onSubmit = async (data: any) => {
-    console.log(data);
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
