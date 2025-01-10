@@ -2,6 +2,7 @@
 
 import { FormModal } from "@/app/components/blocks/FormModal";
 import HeroWidget from "@/app/components/widgets/hero";
+import { Alert } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 
 export default function AdminPage() {
@@ -9,6 +10,8 @@ export default function AdminPage() {
   const [heroData, setHeroData] = useState<any | null>(null);
   const [editing, setEditing] = useState<string | null>(null);
   const [tempData, setTempData] = useState<any>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     const fetchHeroData = async () => {
@@ -34,6 +37,7 @@ export default function AdminPage() {
   };
 
   const startEditing = (section: string) => {
+    setModalOpen(true);
     setTempData({ ...heroData });
     setEditing(section);
   };
@@ -50,6 +54,11 @@ export default function AdminPage() {
         const updatedData = await res.json();
         setHeroData(updatedData);
         setEditing(null);
+        setModalOpen(false);
+        setSuccess(true);
+        setTimeout(() => {
+          setSuccess(false);
+        }, 2000);
       } else {
         console.error("Failed to save data.");
       }
@@ -58,6 +67,8 @@ export default function AdminPage() {
 
   const handleCancel = () => {
     setEditing(null);
+    setTempData(null);
+    setModalOpen(false);
   };
 
   if (!heroData) return <div>Loading...</div>;
@@ -132,38 +143,46 @@ export default function AdminPage() {
         </button>
       </div>
 
+      {success && (
+         <div className="absolute bottom-0 right-0 p-4">
+          <Alert color="success" isVisible={success} title="Değişiklikler Kaydedildi"/>
+         </div>
+      )}
+
+      
       <div className="relative overflow-hidden">
         <HeroWidget data={heroData} />
       </div>
-      {editing && (
-        <FormModal
-          title={`Editing ${editing}`}
-          portalId="hero-modal"
-          childrenClassName="flex flex-col px-4"
-          open={editing}
-          setOpen={setEditing}
-        >
-          <div className="space-y-4">
-            {editing === "global"
-              ? renderInputFields(heroData, [])
-              : renderInputFields(getValueByPath(heroData, editing), [editing])}
-          </div>
-          <div className="space-x-4 sticky bottom-0 bg-white p-4 left-0 right-0">
-            <button
-              onClick={handleSave}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-            >
-              Save
-            </button>
-            <button
-              onClick={handleCancel}
-              className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
-            >
-              Cancel
-            </button>
-          </div>
-        </FormModal>
-      )}
+
+      <FormModal
+        title={`Editing ${editing}`}
+        portalId="hero-modal"
+        childrenClassName="flex flex-col px-4"
+        open={modalOpen}
+        setOpen={setModalOpen}
+      >
+        <div className="space-y-4">
+          {editing === "global"
+            ? renderInputFields(heroData, [])
+            : editing
+            ? renderInputFields(getValueByPath(heroData, editing), [editing])
+            : null}
+        </div>
+        <div className="space-x-4 sticky bottom-0 bg-white p-4 left-0 right-0">
+          <button
+            onClick={handleSave}
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+          >
+            Save
+          </button>
+          <button
+            onClick={handleCancel}
+            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
+          >
+            Cancel
+          </button>
+        </div>
+      </FormModal>
     </div>
   );
 }
