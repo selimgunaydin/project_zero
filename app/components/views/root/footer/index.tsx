@@ -143,14 +143,14 @@ const Footer = () => {
               <span className="block sm:inline">All rights reserved.</span>
               <a
                 href="#"
-                className="inline-block text-teal-600 underline transition hover:text-teal-600/75"
+                className="inline-block underline transition"
               >
                 Terms & Conditions
               </a>
               <span>·</span>
               <a
                 href="#"
-                className="inline-block text-teal-600 underline transition hover:text-teal-600/75"
+                className="inline-block underline transition"
               >
                 Privacy Policy
               </a>

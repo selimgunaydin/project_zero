@@ -56,51 +56,51 @@ export default function Login() {
 
   return (
     <section className="w-full h-screen flex-1 flex items-center justify-center">
+      {error && (
+        <div className="fixed max-w-[400px] w-full h-screen bg-transparent top-0 py-10">
+          <Alert color="danger" title={error} />
+        </div>
+      )}
       <Form
         className="p-6 w-full max-w-[400px] flex flex-col justify-between gap-2 
           border border-solid border-gray-300 bg-white rounded-xl"
         onSubmit={handleSubmit(onSubmit)}
       >
-        {error && (
-          <div className="fixed max-w-[400px] w-full h-screen bg-transparent top-0 py-10">
-            <Alert color="danger" title={error} />
-          </div>
-        )}
         <h1 className="mb-4 w-full text-2xl font-bold">Sign In</h1>
-      <div className="w-full space-y-2">
-      <Input
-          {...register("email")}
-          isRequired
-          errorMessage="Please enter a valid username"
-          label="E-Mail"
-          labelPlacement="outside"
-          name="email"
-          type="email"
-          classNames={{
-            inputWrapper: "h-[50px]",
-          }}
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm">{errors.email.message}</p>
-        )}
-      </div>
-      <div className="mb-4 w-full space-y-2">
-      <Input
-          {...register("password")}
-          isRequired
-          errorMessage="Please enter a valid password"
-          label="Password"
-          labelPlacement="outside"
-          name="password"
-          type="text"
-          classNames={{
-            inputWrapper: "h-[50px]",
-          }}
-        />
-        {errors.password && (
-          <p className="text-red-500 text-sm">{errors.password.message}</p>
-        )}
-      </div>
+        <div className="w-full space-y-2">
+          <Input
+            {...register("email")}
+            isRequired
+            errorMessage="Please enter a valid username"
+            label="E-Mail"
+            labelPlacement="outside"
+            name="email"
+            type="email"
+            classNames={{
+              inputWrapper: "h-[50px]",
+            }}
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          )}
+        </div>
+        <div className="mb-4 w-full space-y-2">
+          <Input
+            {...register("password")}
+            isRequired
+            errorMessage="Please enter a valid password"
+            label="Password"
+            labelPlacement="outside"
+            name="password"
+            type="password"
+            classNames={{
+              inputWrapper: "h-[50px]",
+            }}
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
+          )}
+        </div>
         <Button className="w-full" type="submit" variant="solid">
           Sign In
         </Button>

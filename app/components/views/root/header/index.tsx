@@ -101,48 +101,50 @@ export default async function Header() {
           </Link>
         </div>
 
-        {header_data?.categories &&
-  header_data.categories.length > 0 && (
-    <ul className="col-span-7 flex justify-around items-center">
-      {header_data.categories
-        .sort((a, b) => a.order - b.order)
-        .map((category) => {
-          if (category?.dropdown) {
-            return (
-              <li
-                key={category.id}
-                className={Object.values(
-                  header_data.category_styles || {}
-                ).join(" ")}
-              >
-                <DropdownElement
-                  title={category.name}
-                  content={category.dropdown_items}
-                />
-              </li>
-            );
-          }
+        {header_data?.categories && header_data.categories.length > 0 && (
+          <ul className="col-span-7 flex justify-around items-center">
+            {header_data.categories
+              .sort((a, b) => a.order - b.order)
+              .map((category) => {
+                if (category?.dropdown) {
+                  return (
+                    <li
+                      key={category.id}
+                      className={Object.values(
+                        header_data.category_styles || {}
+                      ).join(" ")}
+                    >
+                      <DropdownElement
+                        title={category.name}
+                        content={category.dropdown_items}
+                      />
+                    </li>
+                  );
+                }
 
-          return (
-            <li
-              key={category.id}
-              className={Object.values(
-                header_data.category_styles || {}
-              ).join(" ")}
-            >
-              <Link href={category.link || "#"}>
-                <span>{category.name}</span>
-              </Link>
-            </li>
-          );
-        })}
-    </ul>
-  )}
-
+                return (
+                  <li
+                    key={category.id}
+                    className={Object.values(
+                      header_data.category_styles || {}
+                    ).join(" ")}
+                  >
+                    <Link href={category.link || "#"}>
+                      <span>{category.name}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+          </ul>
+        )}
 
         <div className="col-span-3 flex justify-end items-center gap-4">
           {header_data?.properties?.search?.show && (
-            <Search placeholder="Search" className="sm:max-w-[10rem]" iconSize={18} />
+            <Search
+              placeholder="Search"
+              className="sm:max-w-[10rem]"
+              iconSize={18}
+            />
           )}
           <Notification visible={header_data?.properties?.notification?.show} />
           <SessionStatus />
