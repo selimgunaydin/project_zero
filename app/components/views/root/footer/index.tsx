@@ -156,7 +156,7 @@ const Footer = () => {
               </a>
             </p>
             <p className="mt-4 text-sm text-gray-500 sm:order-first sm:mt-0">
-              © 2023 Project Zero
+              © 2025 Project Zero
             </p>
           </div>
         </div>
