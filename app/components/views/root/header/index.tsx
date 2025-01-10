@@ -29,40 +29,42 @@ export default async function Header() {
           </div>
 
           <div className="col-span-9 flex items-center justify-end gap-8">
-            {header_data?.categories && header_data?.categories.length && (
-              <ul className="flex justify-around items-center gap-8">
-                {header_data?.categories.map((category) => {
-                  if (category?.dropdown) {
-                    return (
-                      <li
-                        key={category?.id}
-                        className={Object.values(
-                          header_data?.category_styles || {}
-                        ).join(" ")}
-                      >
-                        <DropdownElement
-                          title={category.name}
-                          content={category.dropdown_items}
-                        />
-                      </li>
-                    );
-                  }
-
+          {header_data?.categories && header_data.categories.length > 0 && (
+          <ul className="col-span-7 flex justify-around items-center gap-8">
+            {header_data.categories
+              .sort((a, b) => a.order - b.order)
+              .map((category) => {
+                if (category?.dropdown) {
                   return (
                     <li
-                      key={category?.id}
+                      key={category.id}
                       className={Object.values(
-                        header_data?.category_styles || {}
+                        header_data.category_styles || {}
                       ).join(" ")}
                     >
-                      <Link href={category?.link || "#"}>
-                        <span>{category?.name}</span>
-                      </Link>
+                      <DropdownElement
+                        title={category.name}
+                        content={category.dropdown_items}
+                      />
                     </li>
                   );
-                })}
-              </ul>
-            )}
+                }
+
+                return (
+                  <li
+                    key={category.id}
+                    className={Object.values(
+                      header_data.category_styles || {}
+                    ).join(" ")}
+                  >
+                    <Link href={category.link || "#"}>
+                      <span>{category.name}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+          </ul>
+        )}
 
             <div className="flex justify-end items-center gap-4">
               {header_data?.properties?.search?.show && (
