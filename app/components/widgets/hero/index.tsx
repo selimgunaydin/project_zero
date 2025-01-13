@@ -1,7 +1,7 @@
 export default function HeroWidget({ data }: any) {
   return (
-    <div className={data.container.className}>
-      <div className={data.innerContainer.className}>
+    <div className={data?.container?.className}>
+      <div className={data?.innerContainer?.className}>
         <div
           aria-hidden="true"
           className={
@@ -19,49 +19,57 @@ export default function HeroWidget({ data }: any) {
           />
         </div>
 
-        <div className={data.content.className}>
-          <div className={data.content.announcementContainer.className}>
+        <div className={data?.content?.className}>
+          <div className={data?.content?.announcementContainer?.className}>
             <div
               className={
-                data.content.announcementContainer.announcement.className
+                data?.content?.announcementContainer?.announcement?.className
               }
             >
-              {data.content.announcementContainer.announcement.text}{" "}
+              {data?.content?.announcementContainer?.announcement?.text}{" "}
               <a
-                href={data.content.announcementContainer.announcement.link.href}
+                href={
+                  data?.content?.announcementContainer?.announcement?.link?.href
+                }
                 className={
-                  data.content.announcementContainer.announcement.link.className
+                  data?.content?.announcementContainer?.announcement?.link
+                    ?.className
                 }
               >
                 <span aria-hidden="true" className="absolute inset-0" />
-                {data.content.announcementContainer.announcement.link.text}{" "}
+                {
+                  data?.content?.announcementContainer?.announcement?.link?.text
+                }{" "}
                 <span aria-hidden="true">
-                  {data.content.announcementContainer.announcement.link.icon}
+                  {
+                    data?.content?.announcementContainer?.announcement?.link
+                      ?.icon
+                  }
                 </span>
               </a>
             </div>
           </div>
           <div className="text-center">
-            <h1 className={data.content.title.className}>
-              {data.content.title.text}
+            <h1 className={data?.content?.title?.className}>
+              {data?.content?.title?.text}
             </h1>
-            <p className={data.content.description.className}>
-              {data.content.description.text}
+            <p className={data?.content?.description?.className}>
+              {data?.content?.description?.text}
             </p>
-            <div className={data.content.actions.className}>
+            <div className={data?.content?.actions?.className}>
               <a
-                href={data.content.actions.ctaButton.href}
-                className={data.content.actions.ctaButton.className}
+                href={data?.content?.actions?.ctaButton?.href}
+                className={data?.content?.actions?.ctaButton?.className}
               >
-                {data.content.actions.ctaButton.text}
+                {data?.content?.actions?.ctaButton?.text}
               </a>
               <a
-                href={data.content.actions.learnMore.href}
-                className={data.content.actions.learnMore.className}
+                href={data?.content?.actions?.learnMore?.href}
+                className={data?.content?.actions?.learnMore?.className}
               >
-                {data.content.actions.learnMore.text}{" "}
+                {data?.content?.actions?.learnMore?.text}{" "}
                 <span aria-hidden="true">
-                  {data.content.actions.learnMore.icon}
+                  {data?.content?.actions?.learnMore?.icon}
                 </span>
               </a>
             </div>
