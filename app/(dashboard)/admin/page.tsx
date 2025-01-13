@@ -15,7 +15,7 @@ async function getRecentLogs(): Promise<ILog[]> {
     .limit(10)
     .lean()
     .exec();
-  console.log(logs)
+
   return logs.map(log => ({
     ...log,
     _id: new Types.ObjectId(log._id)
