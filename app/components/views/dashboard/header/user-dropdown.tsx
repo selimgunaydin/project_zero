@@ -34,7 +34,6 @@ export const UserDropdown = () => {
       </NavbarItem>
       <DropdownMenu
         aria-label="User menu actions"
-        onAction={(actionKey) => console.log({ actionKey })}
       >
         <DropdownItem
           key="profile"

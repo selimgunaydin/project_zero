@@ -82,11 +82,11 @@ export default function EditableWidget({
   const handleSave = async () => {
     if (window.confirm("Are you sure you want to save changes?")) {
       const res = await fetch(apiEndpoint, {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(tempData),
       });
-      
+
       if (res.ok) {
         const updatedData = await res.json();
         setWidgetData(updatedData);

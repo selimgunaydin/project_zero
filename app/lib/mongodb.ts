@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import { User } from "../models/User";
+import { HeroWidget, StatsWidget, FeatureWidget, TestimonialsWidget, PricingWidget, BlockCarouselWidget, NewsletterWidget, WidgetList } from "../models/widgets";
+import { addLoggingToModel } from "./logMiddleware";
 
 declare global {
   var mongoose: {
@@ -38,6 +41,18 @@ export async function connectDB() {
 
   try {
     cached.conn = await cached.promise;
+    
+    // Tüm modellere log sistemini ekle
+    addLoggingToModel(User);
+    addLoggingToModel(HeroWidget);
+    addLoggingToModel(StatsWidget);
+    addLoggingToModel(FeatureWidget);
+    addLoggingToModel(TestimonialsWidget);
+    addLoggingToModel(PricingWidget);
+    addLoggingToModel(BlockCarouselWidget);
+    addLoggingToModel(NewsletterWidget);
+    addLoggingToModel(WidgetList);
+    
   } catch (e) {
     cached.promise = null;
     throw e;

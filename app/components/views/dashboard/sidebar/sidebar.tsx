@@ -31,8 +31,8 @@ export const SidebarWrapper = () => {
   const pathname = usePathname();
   const { collapsed, setCollapsed } = useSidebarContext();
   const [company, setCompany] = useState<Company>({
-    name: "Acme Co.",
-    location: "Palo Alto, CA",
+    name: "Project Zero",
+    location: "Istanbul, TR",
     logo: <AcmeIcon />,
   });
   return (
@@ -78,20 +78,6 @@ export const SidebarWrapper = () => {
                 title="Payments"
                 icon={<PaymentsIcon />}
               />
-              <CollapseItems
-                icon={<BalanceIcon />}
-                items={[
-                  { title: "Widget List", href: "/admin/widget-list" },
-                  { title: "Hero", href: "/admin/components/hero" },
-                  { title: "Stats", href: "/admin/components/stats" },
-                  { title: "Feature", href: "/admin/components/feature" },
-                  { title: "Testimonials", href: "/admin/components/testimonials" },
-                  { title: "Pricing", href: "/admin/components/pricing" },
-                  { title: "Block Carousel", href: "/admin/components/block-carousel" },
-                  { title: "Newsletter", href: "/admin/components/newsletter" }
-                ]}
-                title="Components"
-              />
               <SidebarItem
                 isActive={pathname === "/reports"}
                 title="Reports"
@@ -100,15 +86,29 @@ export const SidebarWrapper = () => {
             </SidebarMenu>
 
             <SidebarMenu title="General">
+            <SidebarItem
+                isActive={pathname === "/admin/widget-list"}
+                title="Widget List"
+                icon={<DevIcon />}
+                href="/admin/widget-list"
+              />
+            <CollapseItems
+                icon={<BalanceIcon />}
+                items={[
+                  { title: "Hero", href: "/admin/components/hero" },
+                  { title: "Stats", href: "/admin/components/stats" },
+                  { title: "Feature", href: "/admin/components/feature" },
+                  { title: "Testimonials", href: "/admin/components/testimonials" },
+                  { title: "Pricing", href: "/admin/components/pricing" },
+                  { title: "Block Carousel", href: "/admin/components/block-carousel" },
+                  { title: "Newsletter", href: "/admin/components/newsletter" }
+                ]}
+                title="Widgets"
+              />
               <SidebarItem
                 isActive={pathname === "/developers"}
                 title="Developers"
                 icon={<DevIcon />}
-              />
-              <SidebarItem
-                isActive={pathname === "/view"}
-                title="View Test Data"
-                icon={<ViewIcon />}
               />
               <SidebarItem
                 isActive={pathname === "/settings"}

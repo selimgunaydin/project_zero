@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/app/lib/mongodb';
 import { WidgetList } from '@/app/models/widgets';
+import { logModelOperation } from '@/app/lib/logMiddleware';
 
 export async function GET(
   request: Request,
@@ -27,6 +28,15 @@ export async function PUT(
   try {
     await connectDB();
     const body = await request.json();
+    
+    if (body.order !== undefined) {
+      await logModelOperation(
+        'update',
+        'WidgetList',
+        params.id,
+        `Widget sırası güncellendi: ${body.order}`
+      );
+    }
     
     const widget = await WidgetList.findByIdAndUpdate(
       params.id,

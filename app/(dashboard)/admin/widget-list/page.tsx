@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Button } from "@nextui-org/react";
 import { DragDropContext, Droppable, Draggable, DropResult, DroppableProvided, DraggableProvided, DraggableStateSnapshot } from '@hello-pangea/dnd';
+import { LoaderSpinner } from '@/app/components/blocks/LoaderSpinner';
 
 interface Widget {
   _id: string;
@@ -97,7 +98,9 @@ export default function WidgetManagement() {
   };
 
   if (loading) {
-    return <div className="p-4">Yükleniyor...</div>;
+    return <div className="flex-1">
+      <LoaderSpinner />
+    </div>;
   }
 
   return (
