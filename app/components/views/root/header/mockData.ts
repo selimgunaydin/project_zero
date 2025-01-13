@@ -7,6 +7,75 @@ export const header_data = {
     width: 60,
     height: 60,
   },
+  hamburger_menu_placement: "top",
+  hamburger_menu: {
+    title: {
+      name: "Drawer",
+    },
+    content: {
+      categories: [
+        {
+          id: 1,
+          name: "Services",
+          link: "#",
+          dropdown: true,
+          order: 3,
+          dropdown_items: [
+            { id: 1, name: "Dropdown - 1", link: "#" },
+            { id: 2, name: "Dropdown - 2", link: "#" },
+            { id: 3, name: "Dropdown - 3", link: "#" },
+            { id: 4, name: "Dropdown - 4", link: "#" },
+            { id: 5, name: "Dropdown - 5", link: "#" },
+          ],
+        },
+        {
+          id: 2,
+          name: "Home",
+          link: "#",
+          dropdown: false,
+          order: 1,
+        },
+        {
+          id: 3,
+          name: "About",
+          link: "#",
+          dropdown: false,
+          order: 4,
+        },
+        {
+          id: 4,
+          name: "Contact",
+          link: "#",
+          dropdown: false,
+          order: 5,
+        },
+        {
+          id: 5,
+          name: "Products",
+          link: "#",
+          dropdown: false,
+          order: 2,
+        },
+      ],
+    },
+    footer: {
+      buttons: [
+        {
+          id: 1,
+          title: "Close",
+          color: "danger",
+          variant: "light",
+        },
+        {
+          id: 2,
+          title: "Action",
+          color: "primary",
+          // variant: "",
+        },
+      ],
+    },
+  },
+  hamburger_menu_blur: false,
   categories: [
     {
       id: 1,
@@ -27,14 +96,14 @@ export const header_data = {
       name: "Home",
       link: "#",
       dropdown: false,
-      order: 1, 
+      order: 1,
     },
     {
       id: 3,
       name: "About",
       link: "#",
       dropdown: false,
-      order: 4, 
+      order: 4,
     },
     {
       id: 4,
@@ -48,7 +117,7 @@ export const header_data = {
       name: "Products",
       link: "#",
       dropdown: false,
-      order: 2, 
+      order: 2,
     },
   ],
   category_styles: {
