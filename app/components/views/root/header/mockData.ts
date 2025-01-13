@@ -1,5 +1,5 @@
 export const header_data = {
-  header_type: "spread",
+  header_type: "default",
   brand: {
     logo: "/pz-logo.png",
     alt: "Brand-Logo",

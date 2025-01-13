@@ -111,53 +111,66 @@ export default async function Header() {
           </Link>
         </div>
 
-        {header_data?.categories && header_data.categories.length > 0 && (
-          <ul className="col-span-7 flex justify-around items-center">
-            {header_data.categories
-              .sort((a, b) => a.order - b.order)
-              .map((category) => {
-                if (category?.dropdown) {
-                  return (
-                    <li
-                      key={category.id}
-                      className={Object.values(
-                        header_data.category_styles || {}
-                      ).join(" ")}
-                    >
-                      <DropdownElement
-                        title={category.name}
-                        content={category.dropdown_items}
-                      />
-                    </li>
-                  );
-                }
+        <div className="col-span-10 flex lg:hidden items-center justify-end gap-8">
+          <DrawerHamburger
+            data={header_data?.hamburger_menu}
+            blur={header_data?.hamburger_menu_blur}
+            placement={header_data?.hamburger_menu_placement}
+          />
+        </div>
+        <div className="col-span-10 hidden w-full lg:block">
+          <div className="grid grid-cols-12 col-span-7 items-center gap-8">
+            {header_data?.categories && header_data.categories.length > 0 && (
+              <ul className="col-span-9 flex w-full justify-around items-center">
+                {header_data.categories
+                  .sort((a, b) => a.order - b.order)
+                  .map((category) => {
+                    if (category?.dropdown) {
+                      return (
+                        <li
+                          key={category.id}
+                          className={Object.values(
+                            header_data.category_styles || {}
+                          ).join(" ")}
+                        >
+                          <DropdownElement
+                            title={category.name}
+                            content={category.dropdown_items}
+                          />
+                        </li>
+                      );
+                    }
 
-                return (
-                  <li
-                    key={category.id}
-                    className={Object.values(
-                      header_data.category_styles || {}
-                    ).join(" ")}
-                  >
-                    <Link href={category.link || "#"}>
-                      <span>{category.name}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-          </ul>
-        )}
+                    return (
+                      <li
+                        key={category.id}
+                        className={Object.values(
+                          header_data.category_styles || {}
+                        ).join(" ")}
+                      >
+                        <Link href={category.link || "#"}>
+                          <span>{category.name}</span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+              </ul>
+            )}
 
-        <div className="col-span-3 flex justify-end items-center gap-4">
-          {header_data?.properties?.search?.show && (
-            <Search
-              placeholder="Search"
-              className="sm:max-w-[10rem]"
-              iconSize={18}
-            />
-          )}
-          <Notification visible={header_data?.properties?.notification?.show} />
-          <SessionStatus />
+            <div className="col-span-3 w-full flex justify-end items-center gap-4">
+              {header_data?.properties?.search?.show && (
+                <Search
+                  placeholder="Search"
+                  className="sm:max-w-[10rem]"
+                  iconSize={18}
+                />
+              )}
+              <Notification
+                visible={header_data?.properties?.notification?.show}
+              />
+              <SessionStatus />
+            </div>
+          </div>
         </div>
       </div>
     </div>
