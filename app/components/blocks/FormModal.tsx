@@ -1,7 +1,5 @@
 'use client';
 
-
-
 import { twMerge } from 'tailwind-merge';
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
@@ -26,18 +24,19 @@ export const FormModal = (props: ModalProps) => {
   const {
     children,
     portalId,
-    open,
+    open = false,
     setOpen,
     title = '',
     titleClass = '',
     iconSize = 16,
     showCloseButton = true,
     className,
-    childrenClassName
+    childrenClassName,
   } = props;
-  const ref = useRef(null);
+
+  const ref = useRef<HTMLDivElement | null>(null);
   const { width } = useWindowSize();
-  const isMobile = width < 768;
+  const isMobile = width as any < 768;
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : 'auto';
@@ -49,37 +48,42 @@ export const FormModal = (props: ModalProps) => {
 
   if (!open) return null;
 
-  const handleDrag = (e) => {
-    const top = e.touches[0].clientY;
-    const elTop = ref.current.getBoundingClientRect();
+  const handleDrag = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (ref.current) {
+      const top = e.touches[0].clientY;
+      const elTop = ref.current.getBoundingClientRect();
 
-    if (elTop.top < top || window?.innerHeight - elTop.height < top) {
-      ref.current.style.top = `${top}px`;
+      if (elTop.top < top || window.innerHeight - elTop.height < top) {
+        ref.current.style.top = `${top}px`;
+      }
     }
   };
 
-  const handleDragEnd = (e) => {
-    const top = e.changedTouches[0].clientY;
+  const handleDragEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (ref.current) {
+      const top = e.changedTouches[0].clientY;
 
-    if (top > 500) {
-      setOpen(false);
-    } else {
-      ref.current.style.top = 'auto';
+      if (top > 500) {
+        setOpen?.(false);
+      } else {
+        ref.current.style.top = 'auto';
+      }
     }
   };
+
   const motionProps = !isMobile
     ? {
-      initial: { x: '100%' },
-      animate: { x: 0 },
-      exit: { x: '100%' },
-      transition: { duration: 0.2 }
-    }
+        initial: { x: '100%' },
+        animate: { x: 0 },
+        exit: { x: '100%' },
+        transition: { duration: 0.2 },
+      }
     : {
-      initial: { y: '100%' },
-      animate: { y: 0 },
-      exit: { y: '100%' },
-      transition: { duration: 0.2 }
-    };
+        initial: { y: '100%' },
+        animate: { y: 0 },
+        exit: { y: '100%' },
+        transition: { duration: 0.2 },
+      };
 
   return (
     <ReactPortal wrapperId={portalId}>
@@ -89,7 +93,7 @@ export const FormModal = (props: ModalProps) => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.2 }}
         className="fixed left-0 top-0 z-40 h-screen w-screen bg-black bg-opacity-20"
-        onClick={() => setOpen(false)}
+        onClick={() => setOpen?.(false)}
       />
       <motion.section
         {...motionProps}
@@ -99,18 +103,15 @@ export const FormModal = (props: ModalProps) => {
           className
         )}
       >
-        {
-          portalId !== 'checkout-schedule-modal' &&
-          (
-            <div
-              className="z-50 mb-3 mt-2 flex h-4 w-full items-center justify-center md:hidden"
-              onTouchMove={handleDrag}
-              onTouchEnd={handleDragEnd}
-            >
-              <div className="h-1 w-[58px] rounded-sm bg-gray-500"></div>
-            </div>
-          )
-        }
+        {portalId !== 'checkout-schedule-modal' && (
+          <div
+            className="z-50 mb-3 mt-2 flex h-4 w-full items-center justify-center md:hidden"
+            onTouchMove={handleDrag}
+            onTouchEnd={handleDragEnd}
+          >
+            <div className="h-1 w-[58px] rounded-sm bg-gray-500"></div>
+          </div>
+        )}
 
         {(showCloseButton || title) && (
           <div
@@ -125,7 +126,7 @@ export const FormModal = (props: ModalProps) => {
             {showCloseButton && (
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={() => setOpen?.(false)}
                 className="pe-[26px]"
               >
                 <XCircleIcon className="h-6 w-6 text-gray-500" />
@@ -133,9 +134,7 @@ export const FormModal = (props: ModalProps) => {
             )}
           </div>
         )}
-        <div className={twMerge('flex pt-5', childrenClassName)}>
-          {children}
-        </div>
+        <div className={twMerge('flex pt-5', childrenClassName)}>{children}</div>
       </motion.section>
     </ReactPortal>
   );
