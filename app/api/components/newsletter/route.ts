@@ -1,21 +1,21 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/app/lib/mongodb";
-import { StatsWidget } from "@/app/models/widgets";
-import { statsData } from "@/app/components/widgets/stats/mockData";
+import { NewsletterWidget } from "@/app/models/widgets";
+import { newsletterData } from "@/app/components/widgets/newsletter/mockData";
 
 export async function GET() {
   try {
     await connectDB();
     
-    let widget = await StatsWidget.findOne({ isActive: true });
+    let widget = await NewsletterWidget?.findOne({ isActive: true });
     
     if (!widget) {
-      widget = await StatsWidget.create(statsData);
+      widget = await NewsletterWidget?.create(newsletterData);
     }
     
     return NextResponse.json(widget);
   } catch (error) {
-    console.error("Error in Stats Widget GET:", error);
+    console.error("Error in Newsletter Widget GET:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
@@ -24,13 +24,13 @@ export async function PUT(request: Request) {
   try {
     await connectDB();
     
-    const data = await request.json();
-    let widget = await StatsWidget.findOne({ isActive: true });
+    const data = await request?.json();
+    let widget = await NewsletterWidget?.findOne({ isActive: true });
     
     if (!widget) {
-      widget = await StatsWidget.create({ ...data, isActive: true });
+      widget = await NewsletterWidget?.create({ ...data, isActive: true });
     } else {
-      widget = await StatsWidget.findOneAndUpdate(
+      widget = await NewsletterWidget?.findOneAndUpdate(
         { isActive: true },
         { ...data, updatedAt: new Date() },
         { new: true }
@@ -39,7 +39,7 @@ export async function PUT(request: Request) {
     
     return NextResponse.json(widget);
   } catch (error) {
-    console.error("Error in Stats Widget PUT:", error);
+    console.error("Error in Newsletter Widget PUT:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
-}
+} 

@@ -1,21 +1,21 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/app/lib/mongodb";
-import { StatsWidget } from "@/app/models/widgets";
-import { statsData } from "@/app/components/widgets/stats/mockData";
+import { PricingWidget } from "@/app/models/widgets";
+import { pricingData } from "@/app/components/widgets/pricing/mockData";
 
 export async function GET() {
   try {
     await connectDB();
     
-    let widget = await StatsWidget.findOne({ isActive: true });
+    let widget = await PricingWidget?.findOne({ isActive: true });
     
     if (!widget) {
-      widget = await StatsWidget.create(statsData);
+      widget = await PricingWidget?.create(pricingData);
     }
     
     return NextResponse.json(widget);
   } catch (error) {
-    console.error("Error in Stats Widget GET:", error);
+    console.error("Error in Pricing Widget GET:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
@@ -24,13 +24,13 @@ export async function PUT(request: Request) {
   try {
     await connectDB();
     
-    const data = await request.json();
-    let widget = await StatsWidget.findOne({ isActive: true });
+    const data = await request?.json();
+    let widget = await PricingWidget?.findOne({ isActive: true });
     
     if (!widget) {
-      widget = await StatsWidget.create({ ...data, isActive: true });
+      widget = await PricingWidget?.create({ ...data, isActive: true });
     } else {
-      widget = await StatsWidget.findOneAndUpdate(
+      widget = await PricingWidget?.findOneAndUpdate(
         { isActive: true },
         { ...data, updatedAt: new Date() },
         { new: true }
@@ -39,7 +39,7 @@ export async function PUT(request: Request) {
     
     return NextResponse.json(widget);
   } catch (error) {
-    console.error("Error in Stats Widget PUT:", error);
+    console.error("Error in Pricing Widget PUT:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
-}
+} 

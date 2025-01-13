@@ -1,23 +1,17 @@
-import Stats from "../components/views/root/stats";
-import Feature from "../components/views/root/feature";
-import HeroComponent from "../components/views/root/hero";
-import Testimonials from "../components/views/root/testimonials";
-import Pricing from "../components/views/root/pricing";
-import Newsletter from "../components/views/root/newsletter";
-import BlockCarousel from "../components/views/root/block-carousel";
+import { connectDB } from "../lib/mongodb";
+import { WidgetList } from "../models/widgets";
+import WidgetRenderer from "../components/widget-renderer";
 
+async function getActiveWidgets() {
+  await connectDB();
+  const widgets = await WidgetList.find({ isActive: true }).sort({ order: 1 });
+  return JSON.parse(JSON.stringify(widgets));
+}
 export default async function Home() {
+  const widgets = await getActiveWidgets();
   return (
     <main>
-      <div className="w-full flex flex-col items-center justify-center">
-        <HeroComponent />
-        <Stats />
-        <Feature />
-        <Testimonials />
-        <Pricing />
-        <BlockCarousel />
-        <Newsletter />
-      </div>
+      <WidgetRenderer widgets={widgets} />
     </main>
   );
 }

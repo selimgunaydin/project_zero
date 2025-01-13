@@ -4,12 +4,18 @@ import { useState, useEffect } from "react";
 import { Alert } from "@nextui-org/react";
 import { FormModal } from "@/app/components/blocks/FormModal";
 import { LoaderSpinner } from "../../blocks/LoaderSpinner";
+import { uploadImage } from "@/app/lib/cloudinary";
 
 type EditableWidgetProps = {
   apiEndpoint: string;
   widgetComponent: React.ComponentType<any>;
   title: string;
 };
+
+interface ImageUploadResponse {
+  secure_url: string;
+  public_id: string;
+}
 
 export default function EditableWidget({
   apiEndpoint,
@@ -22,6 +28,7 @@ export default function EditableWidget({
   const [tempData, setTempData] = useState<any>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const fetchWidgetData = async () => {
@@ -46,6 +53,26 @@ export default function EditableWidget({
     setTempData(newData);
   };
 
+  const handleImageUpload = async (path: string, file: File) => {
+    try {
+      setUploading(true);
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      const data: ImageUploadResponse = await response.json();
+      handleInputChange(path, data.secure_url);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const startEditing = (section: string) => {
     setModalOpen(true);
     setTempData({ ...widgetData });
@@ -59,7 +86,7 @@ export default function EditableWidget({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(tempData),
       });
-      console.log(res);
+      
       if (res.ok) {
         const updatedData = await res.json();
         setWidgetData(updatedData);
@@ -88,6 +115,8 @@ export default function EditableWidget({
   const renderInputFields = (obj: any, path: string[] = []) => {
     return Object.keys(obj).map((key) => {
       const currentPath = [...path, key].join(".");
+      const value = getValueByPath(tempData, currentPath);
+
       if (typeof obj[key] === "object" && obj[key] !== null) {
         return (
           <div key={currentPath} className="mb-4">
@@ -96,55 +125,57 @@ export default function EditableWidget({
           </div>
         );
       } else if (key !== "_id" && key !== "__v") {
-        let description;
-        switch (key) {
-          case "className":
-            description = "CSS classes for styling this element.";
-            break;
-          case "text":
-            description = "The content or text displayed in this element.";
-            break;
-          case "href":
-            description = "The link URL for this element, if applicable.";
-            break;
-          case "clipPath":
-            description =
-              "Defines the clipping path for the background effect.";
-            break;
-          default:
-            description = `Description for ${key}.`;
-        }
+        const isImageField = key.toLowerCase().includes('image') || 
+                           key.toLowerCase().includes('avatar') || 
+                           key.toLowerCase().includes('photo');
 
         return (
-          <div key={currentPath} className="mb-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">
+          <div key={currentPath} className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               {key}
-              <span className="ml-2 font-light text-gray-500 text-xs">
-                {description}
-              </span>
             </label>
-            <div className="flex items-center">
+            {isImageField ? (
+              <div className="space-y-2">
+                {value && (
+                  <img
+                    src={value}
+                    alt={`Current ${key}`}
+                    className="w-32 h-32 object-cover rounded"
+                  />
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      handleImageUpload(currentPath, file);
+                    }
+                  }}
+                  className="w-full"
+                />
+              </div>
+            ) : (
               <input
                 type="text"
-                value={
-                  tempData ? String(getValueByPath(tempData, currentPath)) : ""
-                }
+                value={value || ""}
                 onChange={(e) => handleInputChange(currentPath, e.target.value)}
-                className="w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
+                className="w-full border border-gray-300 rounded-md p-2"
               />
-            </div>
+            )}
           </div>
         );
       }
     });
   };
 
-  if (!widgetData)
+  if (!widgetData) {
     return (
       <div className="flex-1">
         <LoaderSpinner />
       </div>
     );
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -177,7 +208,7 @@ export default function EditableWidget({
       >
         <div className="space-y-4">
           {editing === "global"
-            ? renderInputFields(widgetData, [])
+            ? renderInputFields(widgetData)
             : editing
             ? renderInputFields(getValueByPath(widgetData, editing), [editing])
             : null}
@@ -185,12 +216,16 @@ export default function EditableWidget({
         <div className="space-x-4 sticky bottom-0 bg-white p-4 left-0 right-0">
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+            disabled={uploading}
+            className={`px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition ${
+              uploading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
           >
-            Save
+            {uploading ? 'Uploading...' : 'Save'}
           </button>
           <button
             onClick={handleCancel}
+            disabled={uploading}
             className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
           >
             Cancel

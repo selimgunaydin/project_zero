@@ -1,32 +1,46 @@
 // app/api/hero/route.ts
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/app/lib/mongodb';
-import Hero from '@/app/models/Hero';
-
+import { HeroWidget } from '@/app/models/widgets';
+import { heroData } from '@/app/components/widgets/hero/mockData';
 
 export async function GET() {
-  await connectDB();
-
   try {
-    const hero = await Hero.findOne();
-    if (!hero) {
-      return NextResponse.json({ message: 'No hero data found' }, { status: 404 });
+    await connectDB();
+    
+    let widget = await HeroWidget.findOne({ isActive: true });
+    
+    if (!widget) {
+      widget = await HeroWidget.create(heroData);
     }
-    return NextResponse.json(hero);
+    
+    return NextResponse.json(widget);
   } catch (error) {
-    console.error('Error fetching hero data:', error);
-    return NextResponse.json({ message: 'An error occurred while fetching hero data' }, { status: 500 });
+    console.error("Error in Hero Widget GET:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
 
-export async function POST(req: Request) {
-  await connectDB();
-
+export async function PUT(request: Request) {
   try {
-    const data = await req.json();
-    const heroData = await Hero.findOneAndUpdate({}, data, { new: true, upsert: true });
-    return NextResponse.json(heroData, { status: 200 });
+    await connectDB();
+    
+    const data = await request.json();
+    let widget = await HeroWidget.findOne({ isActive: true });
+    
+    if (!widget) {
+      widget = await HeroWidget.create({ ...data, isActive: true });
+    } else {
+      widget = await HeroWidget.findOneAndUpdate(
+        { isActive: true },
+        { ...data, updatedAt: new Date() },
+        { new: true }
+      );
+    }
+    
+    return NextResponse.json(widget);
   } catch (error) {
-    return NextResponse.json({ error: "Failed to update hero data." }, { status: 500 });
+    console.error("Error in Hero Widget PUT:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
