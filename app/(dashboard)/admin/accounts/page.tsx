@@ -1,45 +1,57 @@
-import { getAllUsers } from "@/app/controllers/users";
+"use client";
 
-export default async function Accounts() {
-  const data = await getAllUsers()
-  console.log(data);
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@nextui-org/react";
+import { useEffect, useState } from "react";
+
+export default function Accounts() {
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const res = await fetch("/api/user");
+      const data = await res.json();
+      setData(data);
+    };
+
+    fetchUsers();
+  }, []);
+
   return (
     <div className="overflow-x-auto p-4">
       <h1 className="text-xl font-semibold mb-4">Accounts</h1>
-      <table className="min-w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 px-4 py-2">ID</th>
-            <th className="border border-gray-300 px-4 py-2">Email</th>
-            <th className="border border-gray-300 px-4 py-2">Name</th>
-            <th className="border border-gray-300 px-4 py-2">Surname</th>
-            <th className="border border-gray-300 px-4 py-2">Role</th>
-            <th className="border border-gray-300 px-4 py-2">Phone</th>
-            <th className="border border-gray-300 px-4 py-2">Created At</th>
-            <th className="border border-gray-300 px-4 py-2">Updated At</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((user: any) => (
-            <tr key={user._id}>
-              <td className="border border-gray-300 px-4 py-2">{user._id}</td>
-              <td className="border border-gray-300 px-4 py-2">{user.email}</td>
-              <td className="border border-gray-300 px-4 py-2">{user.name}</td>
-              <td className="border border-gray-300 px-4 py-2">
-                {user.surname}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">{user.role}</td>
-              <td className="border border-gray-300 px-4 py-2">{user.phone}</td>
-              <td className="border border-gray-300 px-4 py-2">
-                {new Date(user.createdAt).toLocaleString()}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {new Date(user.updatedAt).toLocaleString()}
-              </td>
-            </tr>
+      <Table aria-label="Accounts table" className="min-w-full">
+        <TableHeader>
+          <TableColumn>ID</TableColumn>
+          <TableColumn>Email</TableColumn>
+          <TableColumn>Name</TableColumn>
+          <TableColumn>Surname</TableColumn>
+          <TableColumn>Role</TableColumn>
+          <TableColumn>Phone</TableColumn>
+          <TableColumn>Created At</TableColumn>
+          <TableColumn>Updated At</TableColumn>
+        </TableHeader>
+        <TableBody>
+          {data?.map((user: any) => (
+            <TableRow key={user._id}>
+              <TableCell>{user._id}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.surname}</TableCell>
+              <TableCell>{user.role}</TableCell>
+              <TableCell>{user.phone}</TableCell>
+              <TableCell>{new Date(user.createdAt).toLocaleString()}</TableCell>
+              <TableCell>{new Date(user.updatedAt).toLocaleString()}</TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   );
 }
