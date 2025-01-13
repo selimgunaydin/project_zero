@@ -80,7 +80,7 @@ export const SidebarWrapper = () => {
               />
               <CollapseItems
                 icon={<BalanceIcon />}
-                items={[{ title: "Hero", href: "/admin/components/hero" }]}
+                items={[{ title: "Hero", href: "/admin/components/hero" }, { title: "Stats", href: "/admin/components/stats" }]}
                 title="Components"
               />
               <SidebarItem
