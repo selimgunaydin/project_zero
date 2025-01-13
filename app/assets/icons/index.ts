@@ -1,7 +1,5 @@
-import Notification from './notification';
-import ArrowDownIcon from './arrow/arrow-down';
+import Notification from "./notification";
+import ArrowDownIcon from "./arrow/arrow-down";
+import HambuergerIcon from "./hamburger";
 
-export {
-    Notification,
-    ArrowDownIcon,
-}
+export { Notification, ArrowDownIcon, HambuergerIcon };

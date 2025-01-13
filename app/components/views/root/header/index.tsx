@@ -1,4 +1,5 @@
 import { Notification } from "@/app/assets/icons";
+import DrawerHamburger from "@/app/components/drawer";
 import DropdownElement from "@/app/components/dropdown";
 import Search from "@/app/components/search";
 import Image from "next/image";
@@ -28,43 +29,50 @@ export default async function Header() {
             </Link>
           </div>
 
-          <div className="col-span-9 flex items-center justify-end gap-8">
-          {header_data?.categories && header_data.categories.length > 0 && (
-          <ul className="col-span-7 flex justify-around items-center gap-8">
-            {header_data.categories
-              .sort((a, b) => a.order - b.order)
-              .map((category) => {
-                if (category?.dropdown) {
-                  return (
-                    <li
-                      key={category.id}
-                      className={Object.values(
-                        header_data.category_styles || {}
-                      ).join(" ")}
-                    >
-                      <DropdownElement
-                        title={category.name}
-                        content={category.dropdown_items}
-                      />
-                    </li>
-                  );
-                }
+          <div className="col-span-9 flex lg:hidden items-center justify-end gap-8">
+            <DrawerHamburger
+              data={header_data?.hamburger_menu}
+              blur={header_data?.hamburger_menu_blur}
+              placement={header_data?.hamburger_menu_placement}
+            />
+          </div>
+          <div className="col-span-9 hidden lg:flex items-center justify-end gap-8">
+            {header_data?.categories && header_data.categories.length > 0 && (
+              <ul className="col-span-7 flex justify-around items-center gap-8">
+                {header_data.categories
+                  .sort((a, b) => a.order - b.order)
+                  .map((category) => {
+                    if (category?.dropdown) {
+                      return (
+                        <li
+                          key={category.id}
+                          className={Object.values(
+                            header_data.category_styles || {}
+                          ).join(" ")}
+                        >
+                          <DropdownElement
+                            title={category.name}
+                            content={category.dropdown_items}
+                          />
+                        </li>
+                      );
+                    }
 
-                return (
-                  <li
-                    key={category.id}
-                    className={Object.values(
-                      header_data.category_styles || {}
-                    ).join(" ")}
-                  >
-                    <Link href={category.link || "#"}>
-                      <span>{category.name}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-          </ul>
-        )}
+                    return (
+                      <li
+                        key={category.id}
+                        className={Object.values(
+                          header_data.category_styles || {}
+                        ).join(" ")}
+                      >
+                        <Link href={category.link || "#"}>
+                          <span>{category.name}</span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+              </ul>
+            )}
 
             <div className="flex justify-end items-center gap-4">
               {header_data?.properties?.search?.show && (
