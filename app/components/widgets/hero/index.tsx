@@ -136,8 +136,6 @@ export default function HeroWidget({ data = {} as HeroData }) {
   };
 
   return (
-    <div className={data?.container?.className}>
-      <div className={data?.innerContainer?.className}>
     <div className={mergedData.container.className}>
       <div className={mergedData.innerContainer.className}>
         <div
@@ -153,76 +151,42 @@ export default function HeroWidget({ data = {} as HeroData }) {
           />
         </div>
 
-        <div className={data?.content?.className}>
-          <div className={data?.content?.announcementContainer?.className}>
-            <div
-              className={
-                data?.content?.announcementContainer?.announcement?.className
-              }
-            >
-              {data?.content?.announcementContainer?.announcement?.text}{" "}
         <div className={mergedData.content.className}>
           <div className={mergedData.content.announcementContainer.className}>
             <div className={mergedData.content.announcementContainer.announcement.className}>
               {mergedData.content.announcementContainer.announcement.text}{" "}
               <a
-                href={
-                  data?.content?.announcementContainer?.announcement?.link?.href
-                }
-                className={
-                  data?.content?.announcementContainer?.announcement?.link
-                    ?.className
-                }
                 href={mergedData.content.announcementContainer.announcement.link.href}
                 className={mergedData.content.announcementContainer.announcement.link.className}
               >
                 <span aria-hidden="true" className="absolute inset-0" />
-                {
-                  data?.content?.announcementContainer?.announcement?.link?.text
-                }{" "}
                 {mergedData.content.announcementContainer.announcement.link.text}{" "}
                 <span aria-hidden="true">
-                  {
-                    data?.content?.announcementContainer?.announcement?.link
-                      ?.icon
-                  }
                   {mergedData.content.announcementContainer.announcement.link.icon}
                 </span>
               </a>
             </div>
           </div>
           <div className="text-center">
-            <h1 className={data?.content?.title?.className}>
-              {data?.content?.title?.text}
             <h1 className={mergedData.content.title.className}>
               {mergedData.content.title.text}
             </h1>
-            <p className={data?.content?.description?.className}>
-              {data?.content?.description?.text}
             <p className={mergedData.content.description.className}>
               {mergedData.content.description.text}
             </p>
-            <div className={data?.content?.actions?.className}>
             <div className={mergedData.content.actions.className}>
               <a
-                href={data?.content?.actions?.ctaButton?.href}
-                className={data?.content?.actions?.ctaButton?.className}
                 href={mergedData.content.actions.ctaButton.href}
                 className={mergedData.content.actions.ctaButton.className}
               >
-                {data?.content?.actions?.ctaButton?.text}
                 {mergedData.content.actions.ctaButton.text}
               </a>
               <a
-                href={data?.content?.actions?.learnMore?.href}
-                className={data?.content?.actions?.learnMore?.className}
                 href={mergedData.content.actions.learnMore.href}
                 className={mergedData.content.actions.learnMore.className}
               >
-                {data?.content?.actions?.learnMore?.text}{" "}
                 {mergedData.content.actions.learnMore.text}{" "}
                 <span aria-hidden="true">
-                  {data?.content?.actions?.learnMore?.icon}
                   {mergedData.content.actions.learnMore.icon}
                 </span>
               </a>
