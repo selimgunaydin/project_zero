@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/app/lib/mongodb";
 import { NewsletterWidget } from "@/app/models/widgets";
-import { newsletterData } from "@/app/components/widgets/newsletter/mockData";
+import { mockData } from "@/app/components/widgets/newsletter/mockData";
 
 export async function GET() {
   try {
@@ -10,7 +10,7 @@ export async function GET() {
     let widget = await NewsletterWidget?.findOne({ isActive: true });
     
     if (!widget) {
-      widget = await NewsletterWidget?.create(newsletterData);
+      widget = await NewsletterWidget?.create(mockData);
     }
     
     return NextResponse.json(widget);

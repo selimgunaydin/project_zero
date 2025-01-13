@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/app/lib/mongodb";
 import { BlockCarouselWidget } from "@/app/models/widgets";
-import { blockCarouselData } from "@/app/components/widgets/block-carousel/mockData";
+import { mockData } from "@/app/components/widgets/block-carousel/mockData";
 
 export async function GET() {
   try {
@@ -10,7 +10,7 @@ export async function GET() {
     let widget = await BlockCarouselWidget.findOne({ isActive: true });
     
     if (!widget) {
-      widget = await BlockCarouselWidget.create(blockCarouselData);
+      widget = await BlockCarouselWidget.create(mockData);
     }
     
     return NextResponse.json(widget);

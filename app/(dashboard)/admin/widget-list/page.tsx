@@ -111,7 +111,7 @@ export default function WidgetManagement() {
           color="primary"
           onClick={updateSeedData}
         >
-          Seed Data Güncelle
+          Seed Data Oluştur
         </Button>
       </div>
       
