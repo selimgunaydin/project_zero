@@ -1,5 +1,3 @@
-"use client";
-
 interface Widget {
   _id: string;
   type: string;

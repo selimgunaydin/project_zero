@@ -1,8 +1,8 @@
 "use client";
 
+import { Editor } from "@monaco-editor/react";
 import { Button, Textarea } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
-
 
 const AdminEditor = (widgetData: any) => {
   const [htmlContent, setHtmlContent] = useState("");
@@ -55,14 +55,23 @@ const AdminEditor = (widgetData: any) => {
         dangerouslySetInnerHTML={{ __html: htmlContent }}
       />
       <p className="mb-2 text-sm font-semibold">HTML Input</p>
-      <Textarea
-        minRows={40}
-        value={htmlContent}
-        onChange={(e) => setHtmlContent(e.target.value)}
-        className="mb-4"
-        placeholder="HTML içeriğini buraya yazın"
-      />
 
+      <Editor
+        height="400px"
+        defaultLanguage="html"
+        className="mb-4"
+        value={htmlContent}
+        onChange={(value) => setHtmlContent(value || "")}
+        theme="vs-dark"
+        options={{
+          minimap: { enabled: false },
+          fontSize: 14,
+          wordWrap: "on",
+          lineNumbers: "on",
+          formatOnPaste: true,
+          formatOnType: true,
+        }}
+      />
 
       <Button
         onPress={saveData}

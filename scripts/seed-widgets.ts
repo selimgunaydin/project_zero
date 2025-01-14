@@ -46,7 +46,7 @@ if (!MONGODB_URI) {
 const widgets = [
   {
     name: "Hero",
-    type: "Hero",
+    type: "hero",
     order: 1,
     data: `
 
