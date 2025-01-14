@@ -3,9 +3,12 @@ import { connectDB } from "@/app/lib/mongodb";
 import { WidgetList } from "@/app/models/widgets";
 import { logModelOperation } from "@/app/lib/logMiddleware";
 
-export async function GET(
-  request: Request,
-) {
+// URL parametresi tipini belirtiyoruz
+interface Params {
+  id: string;
+}
+
+export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const type = searchParams.get("type");
 
@@ -31,9 +34,15 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  request: Request,
-) {
+// Dinamik parametreyi URL üzerinden alıyoruz
+export async function PUT(request: Request) {
+  const url = new URL(request.url);
+  const id = url.pathname.split("/").pop(); // URL'den id parametresini alıyoruz
+
+  if (!id) {
+    return NextResponse.json({ error: "Widget ID is required" }, { status: 400 });
+  }
+
   try {
     await connectDB();
     const body = await request.json();
@@ -42,12 +51,12 @@ export async function PUT(
       await logModelOperation(
         "update",
         "WidgetList",
-        body.id,
+        id,
         `Widget sırası güncellendi: ${body.order}`
       );
     }
 
-    const widget = await WidgetList.findByIdAndUpdate(body.id, body, {
+    const widget = await WidgetList.findByIdAndUpdate(id, body, {
       new: true,
     });
 
@@ -64,23 +73,28 @@ export async function PUT(
   }
 }
 
-// export async function DELETE(
-//   request: Request,
-//   { params }: { params: { id: string } }
-// ) {
-//   try {
-//     await connectDB();
-//     const widget = await WidgetList.findByIdAndDelete(params.id);
+// Dinamik parametreyi URL üzerinden alıyoruz
+export async function DELETE(request: Request) {
+  const url = new URL(request.url);
+  const id = url.pathname.split("/").pop(); // URL'den id parametresini alıyoruz
 
-//     if (!widget) {
-//       return NextResponse.json({ error: "Widget not found" }, { status: 404 });
-//     }
+  if (!id) {
+    return NextResponse.json({ error: "Widget ID is required" }, { status: 400 });
+  }
 
-//     return NextResponse.json({ message: "Widget deleted successfully" });
-//   } catch (error) {
-//     return NextResponse.json(
-//       { error: "Internal Server Error" },
-//       { status: 500 }
-//     );
-//   }
-// }
+  try {
+    await connectDB();
+    const widget = await WidgetList.findByIdAndDelete(id);
+
+    if (!widget) {
+      return NextResponse.json({ error: "Widget not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: "Widget deleted successfully" });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
