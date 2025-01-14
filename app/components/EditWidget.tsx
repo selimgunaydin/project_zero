@@ -3,6 +3,7 @@
 import { Button, Textarea } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 
+
 const AdminEditor = (widgetData: any) => {
   const [htmlContent, setHtmlContent] = useState("");
   const { data, type } = widgetData;
@@ -28,7 +29,6 @@ const AdminEditor = (widgetData: any) => {
       alert("Bir hata oluştu!");
     }
   };
-  console.log(data);
 
   const handleDeleteWidget = async () => {
     const response = await fetch(`/api/widgets/${widgetData.data._id}`, {
