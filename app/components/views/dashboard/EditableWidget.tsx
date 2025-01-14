@@ -116,7 +116,7 @@ export default function EditableWidget({
     return Object.keys(obj).map((key) => {
       const currentPath = [...path, key].join(".");
       const value = getValueByPath(tempData, currentPath);
-
+      const nonRenderedInputs = ["_id", "__v", "type", "data", "order", "isActive", "createdAt", "updatedAt", "name"];
       if (typeof obj[key] === "object" && obj[key] !== null) {
         return (
           <div key={currentPath} className="mb-4">
@@ -124,7 +124,7 @@ export default function EditableWidget({
             {renderInputFields(obj[key], [...path, key])}
           </div>
         );
-      } else if (key !== "_id" && key !== "__v") {
+      } else if (!nonRenderedInputs.includes(key)) {
         const isImageField =
           key.toLowerCase().includes("image") ||
           key.toLowerCase().includes("avatar") ||
