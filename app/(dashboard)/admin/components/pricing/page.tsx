@@ -6,7 +6,7 @@ import PricingWidget from "@/app/components/widgets/pricing";
 export default function PricingAdminPage() {
   return (
     <EditableWidget
-      apiEndpoint="/api/components/pricing"
+      apiEndpoint="pricing"
       widgetComponent={PricingWidget}
       title="Pricing"
     />

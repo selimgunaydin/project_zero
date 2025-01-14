@@ -7,9 +7,9 @@ export default function StatsAdminPage() {
   return (
     <div>
       <EditableWidget
-        apiEndpoint="/api/components/stats"
+        apiEndpoint="stats"
         widgetComponent={StatsWidget}
-        title="Hero"
+        title="Stats"
       />
     </div>
   );

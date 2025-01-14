@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 export default function HeroAdminPage() {
   return (
     <EditableWidget
-      apiEndpoint="/api/components/hero"
+      apiEndpoint="hero"
       widgetComponent={HeroWidget}
       title="Hero"
     />

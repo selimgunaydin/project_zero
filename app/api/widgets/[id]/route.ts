@@ -5,17 +5,25 @@ import { logModelOperation } from '@/app/lib/logMiddleware';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id?: string; type?: string } }
 ) {
+  const { searchParams } = new URL(request.url);
+  const type = searchParams.get('type');
+
+  if (!type) {
+    return NextResponse.json({ error: 'Type is required' }, { status: 400 });
+  }
+
   try {
     await connectDB();
-    const widget = await WidgetList.findById(params.id);
-    
-    if (!widget) {
-      return NextResponse.json({ error: 'Widget not found' }, { status: 404 });
+
+    // `type` kullanarak filtreleme yapıyoruz
+    const widgets = await WidgetList.find({ type });
+    if (!widgets || widgets.length === 0) {
+      return NextResponse.json({ error: 'No widgets found' }, { status: 404 });
     }
 
-    return NextResponse.json(widget);
+    return NextResponse.json(widgets);
   } catch (error) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }

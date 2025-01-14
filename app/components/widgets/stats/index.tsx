@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function StatsWidget({ data }: any) {
+  console.log(data);
   return (
     <div className="bg-white pb-12 sm:py-4 sm:pb-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">

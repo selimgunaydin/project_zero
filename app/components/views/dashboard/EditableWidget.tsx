@@ -1,10 +1,9 @@
-// components/EditableWidget.tsx
-
 import { useState, useEffect } from "react";
 import { Alert } from "@nextui-org/react";
 import { FormModal } from "@/app/components/blocks/FormModal";
 import { LoaderSpinner } from "../../blocks/LoaderSpinner";
 import { uploadImage } from "@/app/lib/cloudinary";
+import Image from "next/image";
 
 type EditableWidgetProps = {
   apiEndpoint: string;
@@ -32,7 +31,9 @@ export default function EditableWidget({
 
   useEffect(() => {
     const fetchWidgetData = async () => {
-      const res = await fetch(apiEndpoint);
+      const res = await fetch(
+        `/api/widgets/get-widget-data?type=${apiEndpoint}`
+      );
       const data = await res.json();
       setWidgetBackup(data);
       setWidgetData(data);
@@ -57,17 +58,17 @@ export default function EditableWidget({
     try {
       setUploading(true);
       const formData = new FormData();
-      formData.append('file', file);
-      
-      const response = await fetch('/api/upload', {
-        method: 'POST',
+      formData.append("file", file);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
         body: formData,
       });
-      
+
       const data: ImageUploadResponse = await response.json();
       handleInputChange(path, data.secure_url);
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error("Error uploading image:", error);
     } finally {
       setUploading(false);
     }
@@ -79,9 +80,9 @@ export default function EditableWidget({
     setEditing(section);
   };
 
-  const handleSave = async () => {
+  const handleSave = async (id: number) => {
     if (window.confirm("Are you sure you want to save changes?")) {
-      const res = await fetch(apiEndpoint, {
+      const res = await fetch(`/api/widgets/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(tempData),
@@ -125,9 +126,10 @@ export default function EditableWidget({
           </div>
         );
       } else if (key !== "_id" && key !== "__v") {
-        const isImageField = key.toLowerCase().includes('image') || 
-                           key.toLowerCase().includes('avatar') || 
-                           key.toLowerCase().includes('photo');
+        const isImageField =
+          key.toLowerCase().includes("image") ||
+          key.toLowerCase().includes("avatar") ||
+          key.toLowerCase().includes("photo");
 
         return (
           <div key={currentPath} className="mb-4">
@@ -137,7 +139,9 @@ export default function EditableWidget({
             {isImageField ? (
               <div className="space-y-2">
                 {value && (
-                  <img
+                  <Image
+                    width={128}
+                    height={128}
                     src={value}
                     alt={`Current ${key}`}
                     className="w-32 h-32 object-cover rounded"
@@ -196,7 +200,7 @@ export default function EditableWidget({
       )}
 
       <div className="relative overflow-hidden border rounded p-4">
-        <WidgetComponent data={widgetData} />
+        <WidgetComponent data={widgetData.data} />
       </div>
 
       <FormModal
@@ -215,13 +219,13 @@ export default function EditableWidget({
         </div>
         <div className="space-x-4 sticky bottom-0 bg-white p-4 left-0 right-0">
           <button
-            onClick={handleSave}
+            onClick={() => handleSave(widgetData?._id)}
             disabled={uploading}
             className={`px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition ${
-              uploading ? 'opacity-50 cursor-not-allowed' : ''
+              uploading ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
-            {uploading ? 'Uploading...' : 'Save'}
+            {uploading ? "Uploading..." : "Save"}
           </button>
           <button
             onClick={handleCancel}

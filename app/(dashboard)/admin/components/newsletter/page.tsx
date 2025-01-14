@@ -6,7 +6,7 @@ import NewsletterWidget from "@/app/components/widgets/newsletter";
 export default function NewsletterAdminPage() {
   return (
     <EditableWidget
-      apiEndpoint="/api/components/newsletter"
+      apiEndpoint="newsletter"
       widgetComponent={NewsletterWidget}
       title="Newsletter"
     />
