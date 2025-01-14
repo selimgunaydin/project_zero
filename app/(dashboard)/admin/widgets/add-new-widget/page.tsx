@@ -1,14 +1,16 @@
 "use client";
 
+import { Input, Textarea } from "@nextui-org/react";
 import React, { useState } from "react";
 
 const AdminEditor = () => {
+  const [title, setTitle] = useState("");
   const [htmlContent, setHtmlContent] = useState("");
 
   const saveData = async () => {
     const widgetData = {
-      name: "about-us",
-      type: "about-us",
+      name: title,
+      type: title.toLowerCase().replace(" ", "-"),
       order: "10",
       data: htmlContent,
     };
@@ -29,13 +31,23 @@ const AdminEditor = () => {
 
   return (
     <div className="p-4">
-      <textarea
+      <p className="mb-2 text-sm font-semibold">Title</p>
+      <Input
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        className="mb-4"
+        placeholder="Başlık"
+      />
+      <p className="mb-2 text-sm font-semibold">HTML Input</p>
+      <Textarea
         value={htmlContent}
+        minRows={30}
         onChange={(e) => setHtmlContent(e.target.value)}
-        className="w-full h-40 border p-2 mb-4"
+        className="mb-4"
         placeholder="HTML içeriğini buraya yazın"
       />
 
+      <p className="mb-2 text-sm font-semibold">Preview</p>
       <div
         className="border p-4 mb-4 relative overflow-hidden"
         dangerouslySetInnerHTML={{ __html: htmlContent }}

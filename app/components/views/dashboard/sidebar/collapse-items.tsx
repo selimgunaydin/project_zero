@@ -36,7 +36,7 @@ export const CollapseItems = ({ icon, items, title }: Props) => {
           }
         >
           <div className="pl-12 space-y-1.5">
-            {items.map((item:any, index:any) => (
+            {items?.map((item:any, index:any) => (
               <Link
                 href={item.href}
                 key={index}

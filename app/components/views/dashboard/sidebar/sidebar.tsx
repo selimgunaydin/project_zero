@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Sidebar } from "./sidebar.styles";
 import { Avatar, Tooltip } from "@nextui-org/react";
 import { CollapseItems } from "./collapse-items";
@@ -30,11 +30,21 @@ interface Company {
 export const SidebarWrapper = () => {
   const pathname = usePathname();
   const { collapsed, setCollapsed } = useSidebarContext();
+  const [widgetList, setWidgetList] = useState<any>(null);
   const [company, setCompany] = useState<Company>({
     name: "Project Zero",
     location: "Istanbul, TR",
     logo: <AcmeIcon />,
   });
+  useEffect(() => {
+    const fetchWidgetList = async () => {
+      const res = await fetch(`/api/widgets/get-all-widgets`);
+      const data = await res.json();
+      setWidgetList(data);
+    };
+    fetchWidgetList();
+  }, []);
+
   return (
     <aside className="h-screen z-[20] sticky top-0">
       {collapsed ? (
@@ -85,36 +95,31 @@ export const SidebarWrapper = () => {
               />
             </SidebarMenu>
 
-            <SidebarMenu title="General">
-            <SidebarItem
-                isActive={pathname === "/admin/widget-list"}
-                title="Widget List"
-                icon={<DevIcon />}
-                href="/admin/widget-list"
-              />
-            <CollapseItems
+            <SidebarMenu title="Widgets">
+
+              <CollapseItems
                 icon={<BalanceIcon />}
-                items={[
-                  { title: "Hero", href: "/admin/widgets/hero" },
-                  { title: "Stats", href: "/admin/widgets/stats" },
-                  { title: "Feature", href: "/admin/widgets/feature" },
-                  { title: "Testimonials", href: "/admin/widgets/testimonials" },
-                  { title: "Pricing", href: "/admin/widgets/pricing" },
-                  { title: "Block Carousel", href: "/admin/widgets/block-carousel" },
-                  { title: "Newsletter", href: "/admin/widgets/newsletter" }
-                ]}
+                items={widgetList?.map((widget: any) => ({
+                  title: widget.name,
+                  href: `/admin/widgets/${widget.type.toLowerCase()}`,
+                  isActive:
+                    pathname === `/admin/widgets/${widget.type.toLowerCase()}`,
+                }))}
                 title="Widgets"
               />
-              <SidebarItem
-                isActive={pathname === "/developers"}
-                title="Developers"
-                icon={<DevIcon />}
-              />
-              <SidebarItem
-                isActive={pathname === "/settings"}
-                title="Settings"
+                            <SidebarItem
+                isActive={pathname === "/admin/widget-list"}
+                title="Widget Order"
                 icon={<SettingsIcon />}
+                href="/admin/widget-list"
               />
+              <SidebarItem
+                isActive={pathname === "/add-new-widget"}
+                title="Add New Widget"
+                icon={<DevIcon />}
+                href="/admin/widgets/add-new-widget"
+              />
+
             </SidebarMenu>
 
             <SidebarMenu title="Updates">

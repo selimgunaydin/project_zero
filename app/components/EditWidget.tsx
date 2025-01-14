@@ -1,18 +1,17 @@
 "use client";
 
+import { Button, Textarea } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 
 const AdminEditor = (widgetData: any) => {
   const [htmlContent, setHtmlContent] = useState("");
   const { data, type } = widgetData;
-  console.log(widgetData);
 
   useEffect(() => {
     setHtmlContent(data.data);
   }, [data]);
 
   const saveData = async () => {
-    console.log(htmlContent);
     const response = await fetch(`/api/widgets/${widgetData.data._id}`, {
       method: "PUT",
       headers: {
@@ -29,20 +28,41 @@ const AdminEditor = (widgetData: any) => {
       alert("Bir hata oluştu!");
     }
   };
+  console.log(data);
 
+  const handleDeleteWidget = async () => {
+    const response = await fetch(`/api/widgets/${widgetData.data._id}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      alert("Widget başarıyla silindi!");
+    } else {
+      alert("Bir hata oluştu!");
+    }
+  };
   return (
     <div className="p-4">
-      <textarea
-        value={htmlContent}
-        onChange={(e) => setHtmlContent(e.target.value)}
-        className="w-full h-40 border p-2 mb-4"
-        placeholder="HTML içeriğini buraya yazın"
-      />
-
+      <div className="flex justify-between w-full items-center mb-4">
+        <h1 className="text-2xl font-bold">{data.name}</h1>
+        <Button onPress={handleDeleteWidget} className="bg-red-600 text-white">
+          Sil
+        </Button>
+      </div>
+      <p className="mb-2 text-sm font-semibold">Preview</p>
       <div
         className="border p-4 mb-4 relative overflow-hidden"
         dangerouslySetInnerHTML={{ __html: htmlContent }}
       />
+      <p className="mb-2 text-sm font-semibold">HTML Input</p>
+      <Textarea
+        minRows={40}
+        value={htmlContent}
+        onChange={(e) => setHtmlContent(e.target.value)}
+        className="mb-4"
+        placeholder="HTML içeriğini buraya yazın"
+      />
+
 
       <button
         onClick={saveData}
