@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/app/lib/mongodb";
 import { WidgetList } from "@/app/models/widgets";
 import { logModelOperation } from "@/app/lib/logMiddleware";
-
-// URL parametresi tipini belirtiyoruz
 interface Params {
   id: string;
 }
@@ -19,7 +17,6 @@ export async function GET(request: Request) {
   try {
     await connectDB();
 
-    // `type` kullanarak filtreleme yapıyoruz
     const widgets = await WidgetList.find({ type });
     if (!widgets || widgets.length === 0) {
       return NextResponse.json({ error: "No widgets found" }, { status: 404 });
@@ -34,10 +31,9 @@ export async function GET(request: Request) {
   }
 }
 
-// Dinamik parametreyi URL üzerinden alıyoruz
 export async function PUT(request: Request) {
   const url = new URL(request.url);
-  const id = url.pathname.split("/").pop(); // URL'den id parametresini alıyoruz
+  const id = url.pathname.split("/").pop();
 
   if (!id) {
     return NextResponse.json({ error: "Widget ID is required" }, { status: 400 });
@@ -73,10 +69,9 @@ export async function PUT(request: Request) {
   }
 }
 
-// Dinamik parametreyi URL üzerinden alıyoruz
 export async function DELETE(request: Request) {
   const url = new URL(request.url);
-  const id = url.pathname.split("/").pop(); // URL'den id parametresini alıyoruz
+  const id = url.pathname.split("/").pop(); 
 
   if (!id) {
     return NextResponse.json({ error: "Widget ID is required" }, { status: 400 });

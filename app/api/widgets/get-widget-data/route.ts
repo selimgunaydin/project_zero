@@ -21,8 +21,6 @@ export async function GET(
       return NextResponse.json({ error: "No widgets found" }, { status: 404 });
     }
 
-    // İlk widget objesini döndür
-
     return NextResponse.json(widgets[0]);
   } catch (error) {
     console.error(error);
