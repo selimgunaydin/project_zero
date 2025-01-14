@@ -1,6 +1,6 @@
 "use client";
 
-import { Input, Textarea } from "@nextui-org/react";
+import { Button, Input, Textarea } from "@nextui-org/react";
 import React, { useState } from "react";
 
 const AdminEditor = () => {
@@ -53,12 +53,12 @@ const AdminEditor = () => {
         dangerouslySetInnerHTML={{ __html: htmlContent }}
       />
 
-      <button
-        onClick={saveData}
+      <Button
+        onPress={saveData}
         className="bg-blue-500 text-white px-4 py-2 rounded"
       >
         Kaydet
-      </button>
+      </Button>
     </div>
   );
 };

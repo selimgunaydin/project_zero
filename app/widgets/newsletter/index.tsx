@@ -1,3 +1,4 @@
+import { Button, Input } from "@nextui-org/react";
 import React from "react";
 
 export default function NewsletterWidget({ data }: any) {
@@ -16,7 +17,7 @@ export default function NewsletterWidget({ data }: any) {
               <label htmlFor="email" className={data?.content?.form?.label?.className}>
                 {data?.content?.form?.label?.text}
               </label>
-              <input
+              <Input
                 id="email"
                 name="email"
                 type="email"
@@ -26,9 +27,9 @@ export default function NewsletterWidget({ data }: any) {
                 placeholder={data?.content?.form?.input?.placeholder}
               />
             </div>
-            <button type="submit" className={data?.content?.form?.button?.className}>
+            <Button type="submit" className={data?.content?.form?.button?.className}>
               {data?.content?.form?.button?.text}
-            </button>
+            </Button>
           </form>
         </div>
         <dl className={data?.content?.features?.className}>

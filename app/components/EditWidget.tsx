@@ -64,12 +64,12 @@ const AdminEditor = (widgetData: any) => {
       />
 
 
-      <button
-        onClick={saveData}
+      <Button
+        onPress={saveData}
         className="bg-blue-500 text-white px-4 py-2 rounded"
       >
         Kaydet
-      </button>
+      </Button>
     </div>
   );
 };

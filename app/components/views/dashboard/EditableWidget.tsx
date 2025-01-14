@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Alert } from "@nextui-org/react";
+import { Alert, Button } from "@nextui-org/react";
 import { FormModal } from "@/app/components/FormModal";
 import Image from "next/image";
 import { LoaderSpinner } from "../../LoaderSpinner";
@@ -184,12 +184,12 @@ export default function EditableWidget({
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">{title}</h1>
-        <button
-          onClick={() => startEditing("global")}
+        <Button
+          onPress={() => startEditing("global")}
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
         >
           Edit
-        </button>
+        </Button>
       </div>
 
       {success && (
@@ -217,22 +217,22 @@ export default function EditableWidget({
             : null}
         </div>
         <div className="space-x-4 sticky bottom-0 bg-white p-4 left-0 right-0">
-          <button
-            onClick={() => handleSave(widgetData?._id)}
+          <Button
+            onPress={() => handleSave(widgetData?._id)}
             disabled={uploading}
             className={`px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition ${
               uploading ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
             {uploading ? "Uploading..." : "Save"}
-          </button>
-          <button
-            onClick={handleCancel}
+          </Button>
+          <Button
+            onPress={handleCancel}
             disabled={uploading}
             className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
           >
             Cancel
-          </button>
+          </Button>
         </div>
       </FormModal>
     </div>
