@@ -40,7 +40,7 @@ export default function WidgetRenderer({ widgets }: Props) {
           return (
             <div
               key={widget._id}
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(widget.data) }}
+              dangerouslySetInnerHTML={{ __html: widget.data }}
             ></div>
           );
         }
