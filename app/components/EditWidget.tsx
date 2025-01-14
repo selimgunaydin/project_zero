@@ -18,7 +18,9 @@ const AdminEditor = (widgetData: any) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(htmlContent),
+      body: JSON.stringify({
+        data: htmlContent,
+      }),
     });
 
     if (response.ok) {
