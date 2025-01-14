@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { User } from "../models/User";
-import { HeroWidget, StatsWidget, FeatureWidget, TestimonialsWidget, PricingWidget, BlockCarouselWidget, NewsletterWidget, WidgetList } from "../models/widgets";
+import { WidgetList } from "../models/widgets";
 import { addLoggingToModel } from "./logMiddleware";
 
 declare global {
@@ -10,11 +10,12 @@ declare global {
   };
 }
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/project_zero';
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/project_zero";
 
 if (!MONGODB_URI) {
   throw new Error(
-    'Please define the MONGODB_URI environment variable inside .env.local'
+    "Please define the MONGODB_URI environment variable inside .env.local"
   );
 }
 
@@ -41,18 +42,10 @@ export async function connectDB() {
 
   try {
     cached.conn = await cached.promise;
-    
+
     // Tüm modellere log sistemini ekle
     addLoggingToModel(User);
-    addLoggingToModel(HeroWidget);
-    addLoggingToModel(StatsWidget);
-    addLoggingToModel(FeatureWidget);
-    addLoggingToModel(TestimonialsWidget);
-    addLoggingToModel(PricingWidget);
-    addLoggingToModel(BlockCarouselWidget);
-    addLoggingToModel(NewsletterWidget);
     addLoggingToModel(WidgetList);
-    
   } catch (e) {
     cached.promise = null;
     throw e;

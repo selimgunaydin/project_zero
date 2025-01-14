@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import HeroWidget from '../widgets/hero';
-import StatsWidget from '../widgets/stats';
-import FeatureWidget from '../widgets/feature';
-import TestimonialsWidget from '../widgets/testimonials';
-import PricingWidget from '../widgets/pricing';
-import BlockCarouselWidget from '../widgets/block-carousel';
-import NewsletterWidget from '../widgets/newsletter';
+import HeroWidget from "../widgets/hero";
+import StatsWidget from "../widgets/stats";
+import FeatureWidget from "../widgets/feature";
+import TestimonialsWidget from "../widgets/testimonials";
+import PricingWidget from "../widgets/pricing";
+import BlockCarouselWidget from "../widgets/block-carousel";
+import NewsletterWidget from "../widgets/newsletter";
 
 interface Widget {
   _id: string;
@@ -24,7 +24,7 @@ const widgetComponents = {
   feature: FeatureWidget,
   testimonials: TestimonialsWidget,
   pricing: PricingWidget,
-  'block-carousel': BlockCarouselWidget,
+  "block-carousel": BlockCarouselWidget,
   newsletter: NewsletterWidget,
 };
 
@@ -32,13 +32,20 @@ export default function WidgetRenderer({ widgets }: Props) {
   return (
     <>
       {widgets.map((widget) => {
-        const WidgetComponent = widgetComponents[widget.type.toLowerCase() as keyof typeof widgetComponents];
+        const WidgetComponent =
+          widgetComponents[
+            widget.type.toLowerCase() as keyof typeof widgetComponents
+          ];
         if (!WidgetComponent) {
-          console.warn(`Widget type "${widget.type}" not found`);
-          return null;
+          return (
+            <div
+              key={widget._id}
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(widget.data) }}
+            ></div>
+          );
         }
         return <WidgetComponent key={widget._id} data={widget.data} />;
       })}
     </>
   );
-} 
+}

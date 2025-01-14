@@ -85,17 +85,6 @@ export default function WidgetManagement() {
     }
   };
 
-  const updateSeedData = async () => {
-    try {
-      await fetch('/api/widgets/update-seed', {
-        method: 'POST',
-      });
-      alert('Seed data başarıyla güncellendi!');
-    } catch (error) {
-      console.error('Error updating seed data:', error);
-      alert('Seed data güncellenirken bir hata oluştu!');
-    }
-  };
 
   if (loading) {
     return <div className="flex-1">
@@ -107,12 +96,6 @@ export default function WidgetManagement() {
     <div className="p-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Widget Yönetimi</h1>
-        <Button 
-          color="primary"
-          onClick={updateSeedData}
-        >
-          Seed Data Oluştur
-        </Button>
       </div>
       
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -171,7 +154,7 @@ export default function WidgetManagement() {
                       </div>
                       <div>
                         <a
-                          href={`/admin/components/${widget.type.toLowerCase()}`}
+                          href={`/admin/widgets/${widget.type.toLowerCase()}`}
                           className="text-blue-500 hover:text-blue-700 text-sm"
                         >
                           Düzenle
