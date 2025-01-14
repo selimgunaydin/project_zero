@@ -1,7 +1,7 @@
 'use client'
 
 import EditableWidget from "@/app/components/views/dashboard/EditableWidget";
-import BlockCarouselWidget from "@/app/components/widgets/block-carousel";
+import BlockCarouselWidget from "@/app/widgets/block-carousel";
 
 export default function BlockCarouselAdminPage() {
   return (

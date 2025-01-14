@@ -1,4 +1,4 @@
-import StatsWidget from "@/app/components/widgets/stats";
+import StatsWidget from "@/app/widgets/stats";
 import { connectDB } from "@/app/lib/mongodb";
 import StatsWidgetData from "@/app/models/Stats";
 

@@ -416,13 +416,13 @@ const widgetListSchema = new mongoose.Schema({
   }
 });
 
-import { heroData } from '../app/components/widgets/hero/mockData';
-import { statsData } from '../app/components/widgets/stats/mockData';
-import { featureData } from '../app/components/widgets/feature/mockData';
-import { testimonialsData } from '../app/components/widgets/testimonials/mockData';
-import { pricingData } from '../app/components/widgets/pricing/mockData';
-import { blockCarouselData } from '../app/components/widgets/block-carousel/mockData';
-import { newsletterData } from '../app/components/widgets/newsletter/mockData';
+import { heroData } from '../app/widgets/hero/mockData';
+import { statsData } from '../app/widgets/stats/mockData';
+import { featureData } from '../app/widgets/feature/mockData';
+import { testimonialsData } from '../app/widgets/testimonials/mockData';
+import { pricingData } from '../app/widgets/pricing/mockData';
+import { blockCarouselData } from '../app/widgets/block-carousel/mockData';
+import { newsletterData } from '../app/widgets/newsletter/mockData';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 

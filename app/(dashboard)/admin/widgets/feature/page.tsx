@@ -1,7 +1,7 @@
 'use client'
 
 import EditableWidget from "@/app/components/views/dashboard/EditableWidget";
-import FeatureWidget from "@/app/components/widgets/feature";
+import FeatureWidget from "@/app/widgets/feature";
 
 export default function FeatureAdminPage() {
   return (

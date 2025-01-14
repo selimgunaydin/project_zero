@@ -1,12 +1,12 @@
 'use client';
 
-import HeroWidget from './widgets/hero';
-import StatsWidget from './widgets/stats';
-import FeatureWidget from './widgets/feature';
-import TestimonialsWidget from './widgets/testimonials';
-import PricingWidget from './widgets/pricing';
-import BlockCarouselWidget from './widgets/block-carousel';
-import NewsletterWidget from './widgets/newsletter';
+import HeroWidget from '../widgets/hero';
+import StatsWidget from '../widgets/stats';
+import FeatureWidget from '../widgets/feature';
+import TestimonialsWidget from '../widgets/testimonials';
+import PricingWidget from '../widgets/pricing';
+import BlockCarouselWidget from '../widgets/block-carousel';
+import NewsletterWidget from '../widgets/newsletter';
 
 interface Widget {
   _id: string;

@@ -1,7 +1,7 @@
 'use client'
 
 import EditableWidget from "@/app/components/views/dashboard/EditableWidget";
-import PricingWidget from "@/app/components/widgets/pricing";
+import PricingWidget from "@/app/widgets/pricing";
 
 export default function PricingAdminPage() {
   return (

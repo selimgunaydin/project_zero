@@ -1,7 +1,7 @@
 'use client'
 
 import EditableWidget from "@/app/components/views/dashboard/EditableWidget";
-import TestimonialsWidget from "@/app/components/widgets/testimonials";
+import TestimonialsWidget from "@/app/widgets/testimonials";
 
 export default function TestimonialsAdminPage() {
   return (

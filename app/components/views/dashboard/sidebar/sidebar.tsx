@@ -95,13 +95,13 @@ export const SidebarWrapper = () => {
             <CollapseItems
                 icon={<BalanceIcon />}
                 items={[
-                  { title: "Hero", href: "/admin/components/hero" },
-                  { title: "Stats", href: "/admin/components/stats" },
-                  { title: "Feature", href: "/admin/components/feature" },
-                  { title: "Testimonials", href: "/admin/components/testimonials" },
-                  { title: "Pricing", href: "/admin/components/pricing" },
-                  { title: "Block Carousel", href: "/admin/components/block-carousel" },
-                  { title: "Newsletter", href: "/admin/components/newsletter" }
+                  { title: "Hero", href: "/admin/widgets/hero" },
+                  { title: "Stats", href: "/admin/widgets/stats" },
+                  { title: "Feature", href: "/admin/widgets/feature" },
+                  { title: "Testimonials", href: "/admin/widgets/testimonials" },
+                  { title: "Pricing", href: "/admin/widgets/pricing" },
+                  { title: "Block Carousel", href: "/admin/widgets/block-carousel" },
+                  { title: "Newsletter", href: "/admin/widgets/newsletter" }
                 ]}
                 title="Widgets"
               />

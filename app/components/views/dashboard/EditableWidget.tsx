@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { Alert } from "@nextui-org/react";
-import { FormModal } from "@/app/components/blocks/FormModal";
-import { LoaderSpinner } from "../../blocks/LoaderSpinner";
-import { uploadImage } from "@/app/lib/cloudinary";
+import { FormModal } from "@/app/components/FormModal";
 import Image from "next/image";
+import { LoaderSpinner } from "../../LoaderSpinner";
 
 type EditableWidgetProps = {
   apiEndpoint: string;

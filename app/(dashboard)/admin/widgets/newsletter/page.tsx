@@ -1,7 +1,7 @@
 'use client'
 
 import EditableWidget from "@/app/components/views/dashboard/EditableWidget";
-import NewsletterWidget from "@/app/components/widgets/newsletter";
+import NewsletterWidget from "@/app/widgets/newsletter";
 
 export default function NewsletterAdminPage() {
   return (

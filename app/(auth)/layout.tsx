@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { LoaderSpinner } from "@/app/components/blocks/LoaderSpinner";
+import { LoaderSpinner } from "@/app/components/LoaderSpinner";
 import { ROUTES } from "../routes";
 
 export default function AuthLayout({

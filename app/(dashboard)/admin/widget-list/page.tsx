@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Button } from "@nextui-org/react";
 import { DragDropContext, Droppable, Draggable, DropResult, DroppableProvided, DraggableProvided, DraggableStateSnapshot } from '@hello-pangea/dnd';
-import { LoaderSpinner } from '@/app/components/blocks/LoaderSpinner';
+import { LoaderSpinner } from '@/app/components/LoaderSpinner';
 
 interface Widget {
   _id: string;

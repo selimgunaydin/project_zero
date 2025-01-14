@@ -1,4 +1,4 @@
-import HeroWidget from "@/app/components/widgets/hero";
+import HeroWidget from "@/app/widgets/hero";
 import { connectDB } from "@/app/lib/mongodb";
 import Hero from "@/app/models/Hero";
 
