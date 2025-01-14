@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 export default function TestimonialsWidget({ data }: any) {
@@ -20,7 +21,9 @@ export default function TestimonialsWidget({ data }: any) {
                   <p>{testimonial.quote.text}</p>
                 </blockquote>
                 <figcaption className={testimonial.author.container.className}>
-                  <img
+                  <Image
+                    width={64}
+                    height={64}
                     className={testimonial.author.image.className}
                     src={testimonial.author.image.src}
                     alt={testimonial.author.image.alt}

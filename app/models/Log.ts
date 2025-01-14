@@ -2,7 +2,6 @@ import mongoose, { Schema, Document, Types, Model } from 'mongoose';
 
 interface ILogDocument extends Document {
   action: 'create' | 'update' | 'delete';
-  model: string;
   documentId?: string;
   details: string;
   user?: string;
@@ -18,10 +17,6 @@ const LogSchema = new Schema<ILogDocument>({
     type: String,
     required: true,
     enum: ['create', 'update', 'delete']
-  },
-  model: {
-    type: String,
-    required: true
   },
   documentId: {
     type: String

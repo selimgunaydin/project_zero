@@ -16,10 +16,14 @@ async function getRecentLogs(): Promise<ILog[]> {
     .lean()
     .exec();
 
-  return logs.map(log => ({
-    ...log,
-    _id: new Types.ObjectId(log._id)
-  })) as ILog[];
+  return logs.map(log => {
+    // Here, ensure _id is correctly typed or converted
+    const id = new Types.ObjectId(log._id as any);
+    return {
+      ...log,
+      _id: id
+    } as ILog;  // Type assertion here to ensure it matches ILog
+  });
 }
 
 export default async function AdminPage() {
@@ -141,7 +145,6 @@ export default async function AdminPage() {
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-900">{log.details}</p>
                     <div className="mt-1 flex items-center space-x-2 text-sm text-gray-500">
-                      <span>{log.model}</span>
                       {log.documentId && (
                         <>
                           <span>&middot;</span>

@@ -4,7 +4,6 @@ import { WidgetList } from "@/app/models/widgets";
 
 export async function GET(
   request: Request,
-  { params }: { params: { type?: string } }
 ) {
   const { searchParams } = new URL(request.url);
   const type = searchParams.get("type");

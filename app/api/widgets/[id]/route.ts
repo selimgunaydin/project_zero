@@ -5,7 +5,6 @@ import { logModelOperation } from "@/app/lib/logMiddleware";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id?: string; type?: string } }
 ) {
   const { searchParams } = new URL(request.url);
   const type = searchParams.get("type");
@@ -34,7 +33,6 @@ export async function GET(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
 ) {
   try {
     await connectDB();
@@ -44,12 +42,12 @@ export async function PUT(
       await logModelOperation(
         "update",
         "WidgetList",
-        params.id,
+        body.id,
         `Widget sırası güncellendi: ${body.order}`
       );
     }
 
-    const widget = await WidgetList.findByIdAndUpdate(params.id, body, {
+    const widget = await WidgetList.findByIdAndUpdate(body.id, body, {
       new: true,
     });
 
@@ -66,23 +64,23 @@ export async function PUT(
   }
 }
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  try {
-    await connectDB();
-    const widget = await WidgetList.findByIdAndDelete(params.id);
+// export async function DELETE(
+//   request: Request,
+//   { params }: { params: { id: string } }
+// ) {
+//   try {
+//     await connectDB();
+//     const widget = await WidgetList.findByIdAndDelete(params.id);
 
-    if (!widget) {
-      return NextResponse.json({ error: "Widget not found" }, { status: 404 });
-    }
+//     if (!widget) {
+//       return NextResponse.json({ error: "Widget not found" }, { status: 404 });
+//     }
 
-    return NextResponse.json({ message: "Widget deleted successfully" });
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
-  }
-}
+//     return NextResponse.json({ message: "Widget deleted successfully" });
+//   } catch (error) {
+//     return NextResponse.json(
+//       { error: "Internal Server Error" },
+//       { status: 500 }
+//     );
+//   }
+// }

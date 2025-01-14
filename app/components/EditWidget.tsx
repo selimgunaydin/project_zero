@@ -12,12 +12,13 @@ const AdminEditor = (widgetData: any) => {
   }, [data]);
 
   const saveData = async () => {
-    const response = await fetch(`/api/widgets/${widgetData.data._id}`, {
+    const response = await fetch(`/api/widgets/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        id: widgetData.data._id,
         data: htmlContent,
       }),
     });
