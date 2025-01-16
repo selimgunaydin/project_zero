@@ -16,6 +16,7 @@ import { ProductsIcon } from "@/app/components/icons/sidebar/products-icon";
 import { ReportsIcon } from "@/app/components/icons/sidebar/reports-icon";
 import { SettingsIcon } from "@/app/components/icons/sidebar/settings-icon";
 import { ViewIcon } from "@/app/components/icons/sidebar/view-icon";
+import { MediaIcon } from "@/app/components/icons/sidebar/media-icon";
 import { SidebarMenu } from "./sidebar-menu";
 import { useSidebarContext } from "@/app/components/layout/layout-context";
 import { AcmeIcon } from "@/app/components/icons/acme-icon";
@@ -88,10 +89,16 @@ export const SidebarWrapper = () => {
 
             <SidebarMenu title="Widgets">
               <SidebarItem
-                isActive={pathname === "/admin/widget-list"}
+                isActive={pathname === "/admin/widgets"}
                 title="Widgets"
                 icon={<SettingsIcon />}
                 href="/admin/widgets"
+              />
+              <SidebarItem
+                isActive={pathname === "/admin/media"}
+                title="Media"
+                icon={<MediaIcon />}
+                href="/admin/media"
               />
             </SidebarMenu>
 
