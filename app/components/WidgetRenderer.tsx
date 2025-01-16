@@ -15,7 +15,6 @@ interface DynamicComponentProps {
 const WidgetRenderer: React.FC<WidgetRendererProps> = ({ widgets }) => {
   const renderWidget = (widget: IWidget) => {
     if (!widget.isActive) return null;
-    console.log(widgets)
     if (widget.type === 'Custom' && widget.data.generatedComponent) {
       const DynamicComponent = dynamic<DynamicComponentProps>(
         () => import(`../widgets/generated/${widget.data.generatedComponent}`),
