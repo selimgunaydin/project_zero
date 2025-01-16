@@ -18,7 +18,7 @@ const WidgetRenderer: React.FC<WidgetRendererProps> = ({ widgets }) => {
     console.log(widgets)
     if (widget.type === 'Custom' && widget.data.generatedComponent) {
       const DynamicComponent = dynamic<DynamicComponentProps>(
-        () => import(`./widgets/generated/${widget.data.generatedComponent}`),
+        () => import(`../widgets/generated/${widget.data.generatedComponent}`),
         {
           loading: () => <div>Yükleniyor...</div>,
           ssr: true

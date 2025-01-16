@@ -7,7 +7,7 @@ interface TestProps {
 
 const Test: React.FC<TestProps> = ({ data, styles = {} }) => {
   return (
-    <div>test widget</div>
+    <div>test</div>
   );
 };
 

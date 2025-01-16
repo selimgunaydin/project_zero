@@ -28,10 +28,10 @@ const ${formattedName}: React.FC<${formattedName}Props> = ({ data, styles = {} }
 export default ${formattedName};`;
 
     // Dosya yolunu oluştur
-    const filePath = path.join(process.cwd(), 'app', 'components', 'widgets', 'generated', `${formattedName}.tsx`);
+    const filePath = path.join(process.cwd(), 'app', 'widgets', 'generated', `${formattedName}.tsx`);
 
     // generated klasörünü kontrol et ve yoksa oluştur
-    const dirPath = path.join(process.cwd(), 'app', 'components', 'widgets', 'generated');
+    const dirPath = path.join(process.cwd(), 'app', 'widgets', 'generated');
     try {
       await fs.access(dirPath);
     } catch {
@@ -44,7 +44,7 @@ export default ${formattedName};`;
     return NextResponse.json({
       success: true,
       componentName: formattedName,
-      filePath: `/app/components/widgets/generated/${formattedName}.tsx`
+      filePath: `/app/widgets/generated/${formattedName}.tsx`
     });
   } catch (error: any) {
     console.error('Widget bileşeni oluşturulurken hata:', error);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { IWidget } from '@/app/models/Widget';
+import { Editor } from '@monaco-editor/react';
 
 interface WidgetFormProps {
   widget?: IWidget;
@@ -59,16 +60,26 @@ const WidgetForm: React.FC<WidgetFormProps> = ({ widget, onSubmit, onCancel }) =
         <label className="block text-sm font-medium text-gray-700">
           JSX/TSX Kodu
         </label>
-        <textarea
-          className="mt-1 block w-full h-64 font-mono rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          value={formData.data.code}
-          onChange={(e) => setFormData(prev => ({ 
-            ...prev, 
-            data: { ...prev.data, code: e.target.value }
-          }))}
-          placeholder="<div>Bileşen kodunuzu buraya yazın</div>"
-          required
-        />
+
+        <Editor
+        height="400px"
+        defaultLanguage="html"
+        value={formData.data.code}
+        onChange={(value) => setFormData(prev => ({ 
+          ...prev, 
+          data: { ...prev.data, code: value }
+        }))}
+        theme="vs-dark"
+        className="mb-4"
+        options={{
+          minimap: { enabled: false },
+          fontSize: 14,
+          wordWrap: "on",
+          lineNumbers: "on",
+          formatOnPaste: true,
+          formatOnType: true,
+        }}
+      />
       </div>
 
       <div>

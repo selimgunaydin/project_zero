@@ -6,7 +6,27 @@ import WidgetModal from '@/app/components/widgets/WidgetModal';
 import WidgetPreview from '@/app/components/widgets/WidgetPreview';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { toast } from 'react-hot-toast';
-import { WidgetSchema } from '@/app/lib/validations/widget';
+import * as yup from 'yup';
+import { LoaderSpinner } from '@/app/components/LoaderSpinner';
+
+const CustomDataSchema = yup.object({
+  componentName: yup.string().required('Bileşen adı zorunludur'),
+  code: yup.string().required('Bileşen kodu zorunludur'),
+  generatedComponent: yup.string().optional()
+});
+
+const StylesSchema = yup.object().shape({});
+
+export const WidgetSchema = yup.object({
+  name: yup.string().required('Widget adı zorunludur'),
+  type: yup.string().oneOf(['Hero', 'Features', 'Custom'], 'Geçerli bir widget tipi seçin'),
+  isActive: yup.boolean(),
+  data: yup.mixed().when('type', {
+    is: 'Hero',
+    then: () => CustomDataSchema,
+  }),
+  styles: StylesSchema
+});
 
 export default function WidgetsPage() {
   const [widgets, setWidgets] = React.useState<IWidget[]>([]);
@@ -170,7 +190,7 @@ export default function WidgetsPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-indigo-500" />
+          <LoaderSpinner />
       </div>
     );
   }
