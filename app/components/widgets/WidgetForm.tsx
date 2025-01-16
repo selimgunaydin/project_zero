@@ -2,12 +2,15 @@ import React from 'react';
 import { IWidget } from '@/app/models/Widget';
 import { Editor } from '@monaco-editor/react';
 import { Input } from '@nextui-org/react';
+import { validateReactCode } from '@/app/utils/validate-react-code';
 
 interface WidgetFormProps {
   widget?: IWidget;
   onSubmit: (data: any) => Promise<void>;
   onCancel: () => void;
 }
+
+
 
 const WidgetForm: React.FC<WidgetFormProps> = ({ widget, onSubmit, onCancel }) => {
   const [formData, setFormData] = React.useState({
@@ -21,13 +24,41 @@ const WidgetForm: React.FC<WidgetFormProps> = ({ widget, onSubmit, onCancel }) =
     }
   });
 
+  const [error, setError] = React.useState<string | null>(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+
+    // Kod doğrulama
+    if (formData.data.code) {
+      const validation = await validateReactCode(formData.data.code);
+      if (!validation.isValid && validation.error) {
+        setError(validation.error);
+        return;
+      }
+    }
+
     await onSubmit(formData);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {error && (
+        <div className="bg-red-50 border-l-4 border-red-400 p-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div>
         <label className="block text-sm font-medium text-gray-700">
           Widget Adı
