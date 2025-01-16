@@ -8,6 +8,7 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { toast } from 'react-hot-toast';
 import * as yup from 'yup';
 import { LoaderSpinner } from '@/app/components/LoaderSpinner';
+import { Modal, Button, ModalContent, ModalHeader, ModalBody } from '@nextui-org/react';
 
 const CustomDataSchema = yup.object({
   componentName: yup.string().required('Bileşen adı zorunludur'),
@@ -34,6 +35,23 @@ export default function WidgetsPage() {
   const [isPreviewOpen, setIsPreviewOpen] = React.useState(false);
   const [selectedWidget, setSelectedWidget] = React.useState<IWidget | undefined>();
   const [isLoading, setIsLoading] = React.useState(true);
+  const [deleteModal, setDeleteModal] = React.useState<{ isOpen: boolean; id: string | null }>({
+    isOpen: false,
+    id: null,
+  });
+  const [toggleModal, setToggleModal] = React.useState<{ isOpen: boolean; widget: IWidget | null }>({
+    isOpen: false,
+    widget: null,
+  });
+  const [reorderConfirmModal, setReorderConfirmModal] = React.useState<{
+    isOpen: boolean;
+    result: any;
+    updatedWidgets: IWidget[] | null;
+  }>({
+    isOpen: false,
+    result: null,
+    updatedWidgets: null,
+  });
 
   const fetchWidgets = async () => {
     try {
@@ -41,6 +59,7 @@ export default function WidgetsPage() {
       if (!response.ok) throw new Error('Widget\'lar yüklenemedi');
       const data = await response.json();
       setWidgets(data);
+      toast.success('Widget\'lar başarıyla yüklendi');
     } catch (error) {
       toast.error('Widget\'lar yüklenirken hata oluştu');
       console.error(error);
@@ -60,18 +79,26 @@ export default function WidgetsPage() {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    // Yeni sıralamayı uygula
     const updatedWidgets = items.map((item, index) => ({
       ...item,
       order: index
     }));
 
-    setWidgets(updatedWidgets as any);
+    setReorderConfirmModal({
+      isOpen: true,
+      result,
+      updatedWidgets: updatedWidgets as IWidget[],
+    });
+  };
 
-    // Sunucuya güncelleme gönder
+  const confirmReorder = async () => {
+    if (!reorderConfirmModal.updatedWidgets) return;
+
+    setWidgets(reorderConfirmModal.updatedWidgets);
+
     try {
       await Promise.all(
-        updatedWidgets.map((widget) =>
+        reorderConfirmModal.updatedWidgets.map((widget) =>
           fetch('/api/widgets', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -86,7 +113,64 @@ export default function WidgetsPage() {
     } catch (error) {
       toast.error('Sıralama güncellenirken hata oluştu');
       console.error(error);
-      fetchWidgets(); // Hata durumunda orijinal sıralamayı geri yükle
+      fetchWidgets();
+    } finally {
+      setReorderConfirmModal({ isOpen: false, result: null, updatedWidgets: null });
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    setDeleteModal({ isOpen: true, id });
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteModal.id) return;
+
+    try {
+      const response = await fetch(`/api/widgets?id=${deleteModal.id}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) throw new Error('Silme işlemi başarısız');
+
+      await fetchWidgets();
+      toast.success('Widget başarıyla silindi');
+    } catch (error) {
+      toast.error('Widget silinirken hata oluştu');
+      console.error(error);
+    } finally {
+      setDeleteModal({ isOpen: false, id: null });
+    }
+  };
+
+  const handleToggleActive = async (widget: IWidget) => {
+    setToggleModal({ isOpen: true, widget });
+  };
+
+  const confirmToggleActive = async () => {
+    if (!toggleModal.widget) return;
+
+    try {
+      const response = await fetch('/api/widgets', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: toggleModal.widget._id,
+          isActive: !toggleModal.widget.isActive
+        })
+      });
+
+      if (!response.ok) throw new Error('Güncelleme başarısız');
+
+      await fetchWidgets();
+      toast.success(
+        toggleModal.widget.isActive ? 'Widget pasif yapıldı' : 'Widget aktif yapıldı'
+      );
+    } catch (error) {
+      toast.error('Widget durumu güncellenirken hata oluştu');
+      console.error(error);
+    } finally {
+      setToggleModal({ isOpen: false, widget: null });
     }
   };
 
@@ -142,47 +226,6 @@ export default function WidgetsPage() {
       } else {
         toast.error('Widget kaydedilirken hata oluştu');
       }
-      console.error(error);
-    }
-  };
-
-  const handleDelete = async (id: string) => {
-    if (!confirm('Bu widget\'ı silmek istediğinizden emin misiniz?')) return;
-
-    try {
-      const response = await fetch(`/api/widgets?id=${id}`, {
-        method: 'DELETE'
-      });
-
-      if (!response.ok) throw new Error('Silme işlemi başarısız');
-
-      await fetchWidgets();
-      toast.success('Widget silindi');
-    } catch (error) {
-      toast.error('Widget silinirken hata oluştu');
-      console.error(error);
-    }
-  };
-
-  const handleToggleActive = async (widget: IWidget) => {
-    try {
-      const response = await fetch('/api/widgets', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: widget._id,
-          isActive: !widget.isActive
-        })
-      });
-
-      if (!response.ok) throw new Error('Güncelleme başarısız');
-
-      await fetchWidgets();
-      toast.success(
-        widget.isActive ? 'Widget pasif yapıldı' : 'Widget aktif yapıldı'
-      );
-    } catch (error) {
-      toast.error('Widget durumu güncellenirken hata oluştu');
       console.error(error);
     }
   };
@@ -332,6 +375,95 @@ export default function WidgetsPage() {
           widget={selectedWidget}
         />
       )}
+
+      {/* Delete Confirmation Modal */}
+      <Modal 
+        isOpen={deleteModal.isOpen} 
+        onClose={() => setDeleteModal({ isOpen: false, id: null })}
+      >
+        <ModalContent>
+          <ModalHeader>Widget&apos;ı Sil</ModalHeader>
+          <ModalBody>
+            <p>Bu widget&apos;ı silmek istediğinizden emin misiniz?</p>
+            <div className="flex gap-2 justify-end mt-4">
+              <Button
+                color="danger"
+                variant="light"
+                onPress={() => setDeleteModal({ isOpen: false, id: null })}
+              >
+                İptal
+              </Button>
+              <Button
+                color="danger"
+                onPress={confirmDelete}
+              >
+                Sil
+              </Button>
+            </div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      {/* Toggle Active Modal */}
+      <Modal 
+        isOpen={toggleModal.isOpen} 
+        onClose={() => setToggleModal({ isOpen: false, widget: null })}
+      >
+        <ModalContent>
+          <ModalHeader>Widget Durumunu Değiştir</ModalHeader>
+          <ModalBody>
+            <p>
+              Bu widget&apos;ı {toggleModal.widget?.isActive ? 'pasif' : 'aktif'} yapmak istediğinizden emin misiniz?
+            </p>
+            <div className="flex gap-2 justify-end mt-4">
+              <Button
+                color="danger"
+                variant="light"
+                onPress={() => setToggleModal({ isOpen: false, widget: null })}
+              >
+                İptal
+              </Button>
+              <Button
+                color="primary"
+                onPress={confirmToggleActive}
+              >
+                Onayla
+              </Button>
+            </div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      {/* Reorder Confirmation Modal */}
+      <Modal 
+        isOpen={reorderConfirmModal.isOpen} 
+        onClose={() => setReorderConfirmModal({ isOpen: false, result: null, updatedWidgets: null })}
+      >
+        <ModalContent>
+          <ModalHeader>Sıralamayı Güncelle</ModalHeader>
+          <ModalBody>
+            <p>Widget sıralamasını güncellemek istediğinizden emin misiniz?</p>
+            <div className="flex gap-2 justify-end mt-4">
+              <Button
+                color="danger"
+                variant="light"
+                onPress={() => {
+                  setReorderConfirmModal({ isOpen: false, result: null, updatedWidgets: null });
+                  fetchWidgets(); // Orijinal sıralamayı geri yükle
+                }}
+              >
+                İptal
+              </Button>
+              <Button
+                color="primary"
+                onPress={confirmReorder}
+              >
+                Onayla
+              </Button>
+            </div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </div>
   );
 } 

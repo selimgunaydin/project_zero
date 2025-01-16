@@ -7,6 +7,7 @@ import { Log, ILog } from "@/app/models/Log";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";
 import { Types } from "mongoose";
+import DashboardStats from "@/app/components/views/dashboard/DashboardStats";
 
 async function getRecentLogs(): Promise<ILog[]> {
   await connectDB();
@@ -17,12 +18,11 @@ async function getRecentLogs(): Promise<ILog[]> {
     .exec();
 
   return logs.map(log => {
-    // Here, ensure _id is correctly typed or converted
     const id = new Types.ObjectId(log._id as any);
     return {
       ...log,
       _id: id
-    } as ILog;  // Type assertion here to ensure it matches ILog
+    } as ILog;
   });
 }
 
@@ -33,55 +33,7 @@ export default async function AdminPage() {
     <div className="p-6 w-full">
       <h1 className="text-3xl font-bold mb-6">Hoş Geldiniz, Admin</h1>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <Card>
-          <CardBody className="flex flex-row items-center justify-between p-6">
-            <div>
-              <p className="text-sm text-default-500">Toplam Kullanıcı</p>
-              <h3 className="text-2xl font-bold mt-2">1,234</h3>
-            </div>
-            <div className="bg-primary/10 p-3 rounded-full">
-              <IconUsers className="h-6 w-6 text-primary" />
-            </div>
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardBody className="flex flex-row items-center justify-between p-6">
-            <div>
-              <p className="text-sm text-default-500">Aktif Widgetlar</p>
-              <h3 className="text-2xl font-bold mt-2">45</h3>
-            </div>
-            <div className="bg-success/10 p-3 rounded-full">
-              <IconLayoutDashboard className="h-6 w-6 text-success" />
-            </div>
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardBody className="flex flex-row items-center justify-between p-6">
-            <div>
-              <p className="text-sm text-default-500">Sistem Durumu</p>
-              <h3 className="text-2xl font-bold mt-2">Aktif</h3>
-            </div>
-            <div className="bg-secondary/10 p-3 rounded-full">
-              <IconSettings className="h-6 w-6 text-secondary" />
-            </div>
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardBody className="flex flex-row items-center justify-between p-6">
-            <div>
-              <p className="text-sm text-default-500">Günlük Ziyaret</p>
-              <h3 className="text-2xl font-bold mt-2">892</h3>
-            </div>
-            <div className="bg-warning/10 p-3 rounded-full">
-              <IconArrowUpRight className="h-6 w-6 text-warning" />
-            </div>
-          </CardBody>
-        </Card>
-      </div>
+      <DashboardStats />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>

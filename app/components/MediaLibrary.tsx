@@ -24,14 +24,27 @@ export default function MediaLibrary({ onSelect, showSelect = true }: MediaLibra
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; publicId: string | null }>({
+    isOpen: false,
+    publicId: null,
+  });
+  const [uploadModal, setUploadModal] = useState<{ isOpen: boolean; file: File | null }>({
+    isOpen: false,
+    file: null,
+  });
 
   const fetchMedia = async () => {
     try {
       const response = await fetch('/api/media');
+      if (!response.ok) {
+        throw new Error('Medya yüklenirken bir hata oluştu');
+      }
       const data = await response.json();
       setMedia(data.resources);
+      toast.success('Medya başarıyla yüklendi');
     } catch (error) {
       console.error('Medya yüklenemedi:', error);
+      toast.error('Medya yüklenirken bir hata oluştu');
     } finally {
       setLoading(false);
     }
@@ -43,10 +56,15 @@ export default function MediaLibrary({ onSelect, showSelect = true }: MediaLibra
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.[0]) return;
+    setUploadModal({ isOpen: true, file: e.target.files[0] });
+  };
+
+  const confirmUpload = async () => {
+    if (!uploadModal.file) return;
 
     setUploading(true);
     const formData = new FormData();
-    formData.append('file', e.target.files[0]);
+    formData.append('file', uploadModal.file);
 
     try {
       const response = await fetch('/api/media', {
@@ -56,27 +74,42 @@ export default function MediaLibrary({ onSelect, showSelect = true }: MediaLibra
       
       if (!response.ok) throw new Error('Yükleme başarısız');
       
+      toast.success('Dosya başarıyla yüklendi');
       fetchMedia();
     } catch (error) {
       console.error('Yükleme hatası:', error);
+      toast.error('Dosya yüklenirken bir hata oluştu');
     } finally {
       setUploading(false);
+      setUploadModal({ isOpen: false, file: null });
     }
   };
 
   const handleDelete = async (publicId: string) => {
+    setDeleteModal({ isOpen: true, publicId });
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteModal.publicId) return;
+
     try {
-      await fetch('/api/media', {
+      const response = await fetch('/api/media', {
         method: 'DELETE',
-        body: JSON.stringify({ publicId }),
+        body: JSON.stringify({ publicId: deleteModal.publicId }),
         headers: {
           'Content-Type': 'application/json',
         },
       });
+
+      if (!response.ok) throw new Error('Silme işlemi başarısız');
       
+      toast.success('Dosya başarıyla silindi');
       fetchMedia();
     } catch (error) {
       console.error('Silme hatası:', error);
+      toast.error('Dosya silinirken bir hata oluştu');
+    } finally {
+      setDeleteModal({ isOpen: false, publicId: null });
     }
   };
 
@@ -163,6 +196,66 @@ export default function MediaLibrary({ onSelect, showSelect = true }: MediaLibra
                 />
               </div>
             )}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal 
+        isOpen={deleteModal.isOpen} 
+        onClose={() => setDeleteModal({ isOpen: false, publicId: null })}
+      >
+        <ModalContent>
+          <ModalHeader>Dosyayı Sil</ModalHeader>
+          <ModalBody>
+            <p>Bu dosyayı silmek istediğinizden emin misiniz?</p>
+            <div className="flex gap-2 justify-end mt-4">
+              <Button
+                color="danger"
+                variant="light"
+                onPress={() => setDeleteModal({ isOpen: false, publicId: null })}
+              >
+                İptal
+              </Button>
+              <Button
+                color="danger"
+                onPress={confirmDelete}
+              >
+                Sil
+              </Button>
+            </div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      {/* Upload Confirmation Modal */}
+      <Modal 
+        isOpen={uploadModal.isOpen} 
+        onClose={() => setUploadModal({ isOpen: false, file: null })}
+      >
+        <ModalContent>
+          <ModalHeader>Dosya Yükle</ModalHeader>
+          <ModalBody>
+            <p>Bu dosyayı yüklemek istediğinizden emin misiniz?</p>
+            <p className="text-sm text-gray-500">
+              Dosya: {uploadModal.file?.name}
+            </p>
+            <div className="flex gap-2 justify-end mt-4">
+              <Button
+                color="danger"
+                variant="light"
+                onPress={() => setUploadModal({ isOpen: false, file: null })}
+              >
+                İptal
+              </Button>
+              <Button
+                color="primary"
+                onPress={confirmUpload}
+                isLoading={uploading}
+              >
+                Yükle
+              </Button>
+            </div>
           </ModalBody>
         </ModalContent>
       </Modal>

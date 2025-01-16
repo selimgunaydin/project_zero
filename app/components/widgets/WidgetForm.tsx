@@ -10,8 +10,6 @@ interface WidgetFormProps {
   onCancel: () => void;
 }
 
-
-
 const WidgetForm: React.FC<WidgetFormProps> = ({ widget, onSubmit, onCancel }) => {
   const [formData, setFormData] = React.useState({
     name: widget?.name || '',
