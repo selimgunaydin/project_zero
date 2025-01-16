@@ -9,7 +9,7 @@ export async function POST(request: Request) {
     // Bileşen adını düzenle
     const formattedName = componentName
       .replace(/[^a-zA-Z0-9]/g, '')
-      .replace(/^[a-z]/, (letter) => letter.toUpperCase());
+      .replace(/^[a-z]/, (letter: string) => letter.toUpperCase());
 
     // Bileşen kodunu oluştur
     const componentCode = `import React from 'react';
