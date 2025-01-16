@@ -13,7 +13,7 @@ import * as Yup from "yup";
 const loginSchema = Yup.object({
   email: Yup.string().email("Invalid email").required("E-Mail is required"),
   password: Yup.string()
-    .min(8, "Password must be at least 8 characters")
+    .min(4, "Password must be at least 8 characters")
     .required("Required"),
 });
 

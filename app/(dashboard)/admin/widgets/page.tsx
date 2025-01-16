@@ -156,7 +156,9 @@ export default function WidgetsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           id: toggleModal.widget._id,
-          isActive: !toggleModal.widget.isActive
+          isActive: !toggleModal.widget.isActive,
+          action: 'toggleActive',
+          details: `Widget durumu değiştirildi: ${toggleModal.widget.isActive ? 'Pasif' : 'Aktif'}`
         })
       });
 

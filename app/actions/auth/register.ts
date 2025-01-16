@@ -2,6 +2,7 @@
 
 import { connectDB } from "@/app/lib/mongodb";
 import { User } from "@/app/models/User";
+import { logModelOperation } from "@/app/lib/logMiddleware";
 import bcrypt from "bcryptjs";
 
 export const register = async (values: any) => {
@@ -17,6 +18,12 @@ export const register = async (values: any) => {
     await connectDB();
     const userFound = await User.findOne({ email });
     if (userFound) {
+      await logModelOperation(
+        'create',
+        'Auth',
+        undefined,
+        `Kayıt başarısız - Email zaten mevcut: ${email}`
+      );
       return {
         error: "Email already exists!",
       };
@@ -32,8 +39,25 @@ export const register = async (values: any) => {
     });
     await user.save();
 
+    await logModelOperation(
+      'create',
+      'Auth',
+      user._id.toString(),
+      `Yeni kullanıcı kaydı: ${email}`
+    );
+
     return {
       success: "User created, you can login now!",
     };
-  } catch {}
+  } catch (error) {
+    await logModelOperation(
+      'create',
+      'Error',
+      undefined,
+      `Kullanıcı kaydı hatası: ${error}`
+    );
+    return {
+      error: "Registration failed!",
+    };
+  }
 };
