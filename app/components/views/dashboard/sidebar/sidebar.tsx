@@ -30,20 +30,11 @@ interface Company {
 export const SidebarWrapper = () => {
   const pathname = usePathname();
   const { collapsed, setCollapsed } = useSidebarContext();
-  const [widgetList, setWidgetList] = useState<any>(null);
   const [company, setCompany] = useState<Company>({
     name: "Project Zero",
     location: "Istanbul, TR",
     logo: <AcmeIcon />,
   });
-  useEffect(() => {
-    const fetchWidgetList = async () => {
-      const res = await fetch(`/api/widgets/get-all-widgets`);
-      const data = await res.json();
-      setWidgetList(data);
-    };
-    fetchWidgetList();
-  }, []);
 
   return (
     <aside className="h-screen z-[20] sticky top-0">
@@ -96,30 +87,12 @@ export const SidebarWrapper = () => {
             </SidebarMenu>
 
             <SidebarMenu title="Widgets">
-
-              <CollapseItems
-                icon={<BalanceIcon />}
-                items={widgetList?.map((widget: any) => ({
-                  title: widget.name,
-                  href: `/admin/widgets/${widget.type.toLowerCase()}`,
-                  isActive:
-                    pathname === `/admin/widgets/${widget.type.toLowerCase()}`,
-                }))}
-                title="Widgets"
-              />
-                            <SidebarItem
-                isActive={pathname === "/admin/widget-list"}
-                title="Widget Order"
-                icon={<SettingsIcon />}
-                href="/admin/widget-list"
-              />
               <SidebarItem
-                isActive={pathname === "/add-new-widget"}
-                title="Add New Widget"
-                icon={<DevIcon />}
-                href="/admin/widgets/add-new-widget"
+                isActive={pathname === "/admin/widget-list"}
+                title="Widgets"
+                icon={<SettingsIcon />}
+                href="/admin/widgets"
               />
-
             </SidebarMenu>
 
             <SidebarMenu title="Updates">
