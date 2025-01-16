@@ -41,7 +41,6 @@ export default function MediaLibrary({ onSelect, showSelect = true }: MediaLibra
       }
       const data = await response.json();
       setMedia(data.resources);
-      toast.success('Medya başarıyla yüklendi');
     } catch (error) {
       console.error('Medya yüklenemedi:', error);
       toast.error('Medya yüklenirken bir hata oluştu');

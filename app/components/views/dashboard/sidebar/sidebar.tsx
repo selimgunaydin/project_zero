@@ -104,9 +104,10 @@ export const SidebarWrapper = () => {
 
             <SidebarMenu title="Updates">
               <SidebarItem
-                isActive={pathname === "/changelog"}
-                title="Changelog"
+                isActive={pathname === "/logs"}
+                title="Logs"
                 icon={<ChangeLogIcon />}
+                href="/admin/logs"
               />
             </SidebarMenu>
           </div>
