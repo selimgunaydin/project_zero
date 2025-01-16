@@ -10,13 +10,6 @@ export async function GET() {
     await connectDB();
     const widgets = await Widget.find().sort({ order: 1 });
     
-    await logModelOperation(
-      'create',
-      'Widget',
-      undefined,
-      'Widget listesi görüntülendi'
-    );
-    
     return NextResponse.json(widgets);
   } catch (error) {
     console.error('Widget\'lar alınırken hata:', error);

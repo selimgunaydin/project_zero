@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { tr } from "date-fns/locale";
 import { Types } from "mongoose";
 import DashboardStats from "@/app/components/views/dashboard/DashboardStats";
+import Link from "next/link";
 
 async function getRecentLogs(): Promise<ILog[]> {
   await connectDB();
@@ -39,7 +40,8 @@ export default async function AdminPage() {
         <Card>
           <CardBody className="p-6">
             <h2 className="text-xl font-semibold mb-4">Hızlı İşlemler</h2>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
+              <Link href="/admin/accounts">
               <Button 
                 variant="bordered" 
                 className="w-full justify-start" 
@@ -47,13 +49,16 @@ export default async function AdminPage() {
               >
                 Kullanıcı Yönetimi
               </Button>
+              </Link>
+              <Link href="/admin/widgets">
               <Button 
                 variant="bordered" 
                 className="w-full justify-start"
                 startContent={<IconLayoutDashboard className="h-5 w-5" />}
               >
                 Widget Yönetimi
-              </Button>
+              </Button></Link>
+              <Link href="#">
               <Button 
                 variant="bordered" 
                 className="w-full justify-start"
@@ -61,6 +66,7 @@ export default async function AdminPage() {
               >
                 Sistem Ayarları
               </Button>
+              </Link>
             </div>
           </CardBody>
         </Card>
