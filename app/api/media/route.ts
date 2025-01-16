@@ -9,14 +9,7 @@ export async function GET() {
       prefix: 'widgets',
       max_results: 100
     });
-    
-    await logModelOperation(
-      'create',
-      'Media',
-      undefined,
-      'Medya listesi görüntülendi'
-    );
-    
+
     return NextResponse.json(result);
   } catch (error) {
     console.error('Medya listesi alınamadı:', error);
