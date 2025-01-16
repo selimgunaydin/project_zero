@@ -17,7 +17,7 @@ const CustomDataSchema = yup.object({
 
 const StylesSchema = yup.object().shape({});
 
-export const WidgetSchema = yup.object({
+const WidgetSchema = yup.object({
   name: yup.string().required('Widget adı zorunludur'),
   type: yup.string().oneOf(['Hero', 'Features', 'Custom'], 'Geçerli bir widget tipi seçin'),
   isActive: yup.boolean(),
