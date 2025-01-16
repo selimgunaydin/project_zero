@@ -66,7 +66,7 @@ export default function WidgetsPage() {
       order: index
     }));
 
-    setWidgets(updatedWidgets);
+    setWidgets(updatedWidgets as any);
 
     // Sunucuya güncelleme gönder
     try {

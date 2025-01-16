@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/app/lib/mongodb';
 import { Widget } from '@/app/models/Widget';
+import fs from 'fs';
+import path from 'path';
 
 export async function GET() {
   try {
@@ -73,13 +75,12 @@ export async function DELETE(request: Request) {
 
     if (!id) {
       return NextResponse.json(
-        { error: 'ID parametresi gerekli' },
+        { error: 'Widget ID gerekli' },
         { status: 400 }
       );
     }
 
-    const widget = await Widget.findByIdAndDelete(id);
-
+    const widget = await Widget.findById(id);
     if (!widget) {
       return NextResponse.json(
         { error: 'Widget bulunamadı' },
@@ -87,7 +88,17 @@ export async function DELETE(request: Request) {
       );
     }
 
-    return NextResponse.json({ success: true });
+    // Widget'ı veritabanından sil
+    await Widget.findByIdAndDelete(id);
+
+    // Widget component dosyasını sil
+    const componentPath = path.join(process.cwd(), 'app', 'widgets', 'generated', `${widget.name}.tsx`);
+    
+    if (fs.existsSync(componentPath)) {
+      fs.unlinkSync(componentPath);
+    }
+
+    return NextResponse.json({ message: 'Widget başarıyla silindi' });
   } catch (error) {
     console.error('Widget silinirken hata:', error);
     return NextResponse.json(

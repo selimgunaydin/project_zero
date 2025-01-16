@@ -1,6 +1,7 @@
 import React from 'react';
 import { IWidget } from '@/app/models/Widget';
 import { Editor } from '@monaco-editor/react';
+import { Input } from '@nextui-org/react';
 
 interface WidgetFormProps {
   widget?: IWidget;
@@ -31,7 +32,7 @@ const WidgetForm: React.FC<WidgetFormProps> = ({ widget, onSubmit, onCancel }) =
         <label className="block text-sm font-medium text-gray-700">
           Widget Adı
         </label>
-        <input
+        <Input
           type="text"
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           value={formData.name}
@@ -44,7 +45,7 @@ const WidgetForm: React.FC<WidgetFormProps> = ({ widget, onSubmit, onCancel }) =
         <label className="block text-sm font-medium text-gray-700">
           Bileşen Adı
         </label>
-        <input
+        <Input
           type="text"
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           value={formData.data.componentName}
